@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+  <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+  <script src="https://unpkg.com/http-vue-loader"></script>
 </head>
 <body>
-
-<script>
-  $.ajax({
-    url: '/getData',
-    type: "get"
-  }).done(function (data) {
-    // res = JSON.parse(data);
-    console.log(data)
-  }).fail(function (err) {
-    console.log(err)
-  });
-</script>
+  <canvas id="myChart"></canvas>
+  <script src="/static/main.js"></script>
 </body>
 </html>

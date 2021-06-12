@@ -19,13 +19,13 @@ services:
     ports:
       - 3000:3000
     tty: true
-  nginx:
-    image: nginx
-    depends_on:
-      - go
-    ports:
-      - 80:80
-    environment:
-      - TZ=Asia/Tokyo
-    volumes:
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+  # nginx:
+  #   image: nginx
+  #   depends_on:
+  #     - go
+  #   ports:
+  #     - 80:80
+  #   environment:
+  #     - TZ=Asia/Tokyo
+  #   volumes:
+  #     - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
