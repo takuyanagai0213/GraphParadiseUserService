@@ -1,9 +1,5 @@
-<template>
-  
-</template>
-<script type="module">
-import { Bar } from 'vue-chartjs';
 
+import { Bar } from 'vue-chartjs';
 export default {
   extends: Bar,
   name: 'chart',
@@ -65,4 +61,3 @@ export default {
     this.renderChart(this.data, this.options)
   }
 }
-</script>

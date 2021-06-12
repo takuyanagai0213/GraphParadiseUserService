@@ -5,9 +5,28 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
   <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
   <script src="https://unpkg.com/http-vue-loader"></script>
+  <style>
+    .box {
+      display: inline-block;
+    }
+    .container {
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
-  <canvas id="myChart"></canvas>
+  <div class="container">
+    <div class="box">
+      <canvas id="myChart1"></canvas>
+    </div>
+    <div class="box">
+      <canvas id="myChart2"></canvas>
+    </div>
+    <div class="box">
+      <canvas id="myChart3"></canvas>
+    </div>
+  </div>
+  <!-- <script src="/static/Chart.js"></script> -->
   <script src="/static/main.js"></script>
 </body>
 </html>

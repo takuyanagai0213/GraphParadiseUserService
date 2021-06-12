@@ -3,9 +3,9 @@ class chart {
   constructor(json){
     console.log(this.json)
   }
-  drowChart(json){
+  drowChart(json, target){
     console.log(json)
-    var ctx = document.getElementById("myChart");
+    var ctx = document.getElementById(target);
     var myChart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -23,18 +23,6 @@ class chart {
           borderColor: "rgba(255,0,0,1)",
           backgroundColor: "rgba(0,0,0,0)"
         },
-        {
-          label: '最高気温(度）',
-          data: json,
-          borderColor: "rgba(255,0,0,1)",
-          backgroundColor: "rgba(0,0,0,0)"
-        },
-        {
-          label: '最低気温(度）',
-          data: [25, 27, 27, 25, 26, 27, 25, 21],
-          borderColor: "rgba(0,0,255,1)",
-          backgroundColor: "rgba(0,0,0,0)"
-        }
       ],
     },
     options: {
@@ -65,5 +53,21 @@ $.ajax({
   dataType: 'json',
 }).then(function (json) {
   console.log(json)
-  chartClass.drowChart(json);
+  chartClass.drowChart(json, "myChart1");
+});
+$.ajax({
+  url: '/getData',
+  type: "get",
+  dataType: 'json',
+}).then(function (json) {
+  console.log(json)
+  chartClass.drowChart(json, "myChart2");
+});
+$.ajax({
+  url: '/getData',
+  type: "get",
+  dataType: 'json',
+}).then(function (json) {
+  console.log(json)
+  chartClass.drowChart(json, "myChart3");
 });
