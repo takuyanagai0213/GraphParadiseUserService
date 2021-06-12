@@ -15,6 +15,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/golang/Dockerfile
+    volumes: 
+      - .:/app/go
     container_name: go_container
     ports:
       - 8000:8000
