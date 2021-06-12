@@ -12,7 +12,7 @@ func main() {
 	http.HandleFunc("/", echoHello)
 	http.HandleFunc("/getData", getData)
 	// port
-	http.ListenAndServe(":8000", nil)
+	http.ListenAndServe(":3000", nil)
 }
 
 func echoHello(w http.ResponseWriter, r *http.Request) {

@@ -1,23 +1,31 @@
 version: '3'
 services:
-  react:
+  vue:
     build:
       context: .
       dockerfile: ./docker/node/Dockerfile
-    container_name: react_container
     tty: true
     volumes:
-    - ./react-app:/app/react
-    command: sh -c "cd /app/react  && yarn start"
+    - .:/app
+    # command: sh -c "cd /app/react  && yarn start"
     ports:
-      - 3000:3000
+      - 8080:8080
   go:
     build:
       context: .
       dockerfile: ./docker/golang/Dockerfile
     volumes: 
-      - .:/app/go
-    container_name: go_container
+      - .:/app
     ports:
-      - 8000:8000
+      - 3000:3000
     tty: true
+  nginx:
+    image: nginx
+    depends_on:
+      - go
+    ports:
+      - 80:80
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
