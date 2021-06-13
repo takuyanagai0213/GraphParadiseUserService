@@ -1,4 +1,4 @@
-module hello
+module graph_paradise
 
 go 1.16
 
