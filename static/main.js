@@ -48,7 +48,7 @@ class chart {
 }
 const chartClass = new chart();
 $.ajax({
-  url: '/getData',
+  url: '/getData1',
   type: "get",
   dataType: 'json',
 }).then(function (json) {
@@ -56,7 +56,7 @@ $.ajax({
   chartClass.drowChart(json, "myChart1");
 });
 $.ajax({
-  url: '/getData',
+  url: '/getData2',
   type: "get",
   dataType: 'json',
 }).then(function (json) {
@@ -64,10 +64,34 @@ $.ajax({
   chartClass.drowChart(json, "myChart2");
 });
 $.ajax({
-  url: '/getData',
+  url: '/getData3',
   type: "get",
   dataType: 'json',
 }).then(function (json) {
   console.log(json)
   chartClass.drowChart(json, "myChart3");
+});
+$.ajax({
+  url: '/getData3',
+  type: "get",
+  dataType: 'json',
+}).then(function (json) {
+  console.log(json)
+  chartClass.drowChart(json, "myChart4");
+});
+$.ajax({
+  url: '/getData2',
+  type: "get",
+  dataType: 'json',
+}).then(function (json) {
+  console.log(json)
+  chartClass.drowChart(json, "myChart5");
+});
+$.ajax({
+  url: '/getData1',
+  type: "get",
+  dataType: 'json',
+}).then(function (json) {
+  console.log(json)
+  chartClass.drowChart(json, "myChart6");
 });

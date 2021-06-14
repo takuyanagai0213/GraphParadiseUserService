@@ -15,7 +15,9 @@ func main() {
 	http.HandleFunc("/graph", graph)
 	http.HandleFunc("/new", api.New)
 	http.HandleFunc("/get", api.Get)
-	http.HandleFunc("/getData", api.GetData)
+	http.HandleFunc("/getData1", api.GetData1)
+	http.HandleFunc("/getData2", api.GetData2)
+	http.HandleFunc("/getData3", api.GetData3)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(dir+"/static/"))))
 	// port
 	http.ListenAndServe(":3000", nil)
