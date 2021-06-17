@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"graph_paradise/database"
 	"math/rand"
@@ -40,18 +41,26 @@ func createDummyData() []int {
 
 type User struct {
 	gorm.Model
-	Name  string
-	Email string
+	Name     string
+	Password string
 }
 
 func New(w http.ResponseWriter, r *http.Request) {
+	var name string = r.FormValue("name")
+	var password string = r.FormValue("password")
+
+	if name == "" || password == "" {
+		fmt.Println("Empty user or Empty password")
+		return
+	}
 	db := database.DBConnect()
 	db.AutoMigrate(&User{})
 
-	name := "takuya"
-	email := "aaabbb@exmaplle.com"
-	fmt.Println("create user " + name + " with email " + email)
-	db.Create(&User{Name: name, Email: email})
+	// パスワードのハッシュ化
+	hashed_password, _ := bcrypt.GenerateFromPassword([]byte(password), 10)
+
+	fmt.Println("create user " + name + " with password " + string(hashed_password))
+	db.Create(&User{Name: name, Password: string(hashed_password)})
 	// defer db.Close()
 }
 func Get(w http.ResponseWriter, r *http.Request) {

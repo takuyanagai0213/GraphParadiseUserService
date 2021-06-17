@@ -2,6 +2,7 @@ package main
 
 import (
 	"graph_paradise/api"
+	"graph_paradise/auth"
 	"html/template"
 	"log"
 	"net/http"
@@ -12,6 +13,8 @@ import (
 func main() {
 	dir, _ := os.Getwd()
 
+	http.HandleFunc("/auth", auth.Auth)
+	http.HandleFunc("/login", auth.Login)
 	http.HandleFunc("/graph", graph)
 	http.HandleFunc("/new", api.New)
 	http.HandleFunc("/get", api.Get)
