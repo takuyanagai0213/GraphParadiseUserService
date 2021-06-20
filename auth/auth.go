@@ -26,8 +26,7 @@ func Auth(w http.ResponseWriter, r *http.Request) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("method:", r.Method) //リクエストを取得するメソッド
-	//ログインデータがリクエストされ、ログインのロジック判断が実行されます。
+	fmt.Println("method:", r.Method)
 	fmt.Println("username:", r.FormValue("username"))
 	fmt.Println("password:", r.FormValue("password"))
 	db := database.DBConnect()
