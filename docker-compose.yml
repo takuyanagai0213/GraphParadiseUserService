@@ -1,15 +1,5 @@
 version: '3'
 services:
-  vue:
-    build:
-      context: .
-      dockerfile: ./docker/node/Dockerfile
-    tty: true
-    volumes:
-    - .:/app
-    # command: sh -c "cd /app/react  && yarn start"
-    ports:
-      - 8080:8080
   go:
     build:
       context: .
@@ -38,13 +28,3 @@ services:
 volumes:
   db-data:
     driver: local
-  # nginx:
-  #   image: nginx
-  #   depends_on:
-  #     - go
-  #   ports:
-  #     - 80:80
-  #   environment:
-  #     - TZ=Asia/Tokyo
-  #   volumes:
-  #     - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
