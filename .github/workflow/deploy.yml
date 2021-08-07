@@ -1,8 +1,9 @@
 name: Deploy to Amazon ECS
 
 on:
-  release:
-    types: [ created ]
+  pull_request:
+    types: [closed]
+
 
 env:
   AWS_REGION: MY_AWS_REGION                   # これをお好みの AWS リージョンに設定する (us-west-1 など)
@@ -22,6 +23,8 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+
     permissions:
       packages: write
       contents: read
