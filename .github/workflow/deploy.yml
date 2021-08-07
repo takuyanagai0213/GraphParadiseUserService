@@ -6,14 +6,12 @@ on:
 
 
 env:
-  AWS_REGION: MY_AWS_REGION                   # これをお好みの AWS リージョンに設定する (us-west-1 など)
-  ECR_REPOSITORY: MY_ECR_REPOSITORY           # これを Amazon ECR リポジトリ名に設定する
-  ECS_SERVICE: MY_ECS_SERVICE                 # これを Amazon ECS サービス名に設定する
-  ECS_CLUSTER: MY_ECS_CLUSTER                 # これを Amazon ECS クラスタ名に設定する
-  ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # これを Amazon ECS タスク定義へのパスに設定する
-                                               # ファイル (.aws/task-definition.json など)
-  CONTAINER_NAME: MY_CONTAINER_NAME           # これをタスク定義の containerDefinitions セクションで
-                                               # コンテナの名前に設定する
+  AWS_REGION:          ${{ secrets.AWS_REGION }}
+  ECR_REPOSITORY:      ${{ secrets.MY_ECR_REPOSITORY }}
+  ECS_SERVICE:         ${{ secrets.MY_ECS_SERVICE }}
+  ECS_CLUSTER:         ${{ secrets.MY_ECS_CLUSTER }} 
+  ECS_TASK_DEFINITION: ${{ secrets.MY_ECS_TASK_DEFINITION }}
+  CONTAINER_NAME:      ${{ secrets.MY_CONTAINER_NAME }}
 
 defaults:
   run:
