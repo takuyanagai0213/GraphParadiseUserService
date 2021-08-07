@@ -4,6 +4,7 @@ on:
   pull_request:
     types: [closed]
 
+
 env:
   AWS_REGION: MY_AWS_REGION                   # これをお好みの AWS リージョンに設定する (us-west-1 など)
   ECR_REPOSITORY: MY_ECR_REPOSITORY           # これを Amazon ECR リポジトリ名に設定する
@@ -23,6 +24,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
+
     permissions:
       packages: write
       contents: read
