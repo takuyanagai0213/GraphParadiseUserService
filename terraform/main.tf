@@ -33,7 +33,7 @@ resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = "handson"
+    Name = "go-vpc"
   }
 }
 resource "aws_subnet" "public_1c" {
@@ -44,7 +44,7 @@ resource "aws_subnet" "public_1c" {
   cidr_block        = "10.0.2.0/24"
 
   tags = {
-    Name = "handson-public-1c"
+    Name = "go-public-subnet-1c"
   }
 }
 # Internet Gateway
@@ -53,7 +53,7 @@ resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
 
   tags = {
-    Name = "handson"
+    Name = "go-gw"
   }
 }
 
@@ -63,7 +63,7 @@ resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.main.id}"
 
   tags = {
-    Name = "handson-public"
+    Name = "go-public-rt"
   }
 }
 
@@ -133,7 +133,7 @@ resource "aws_ecs_cluster" "main" {
 # ELB Target Group
 # https://www.terraform.io/docs/providers/aws/r/lb_target_group.html
 # resource "aws_lb_target_group" "main" {
-#   name = "handson"
+#   name = "go-elb"
 
 #   # ターゲットグループを作成するVPC
 #   vpc_id = "${aws_vpc.main.id}"
@@ -171,8 +171,8 @@ resource "aws_ecs_cluster" "main" {
 # SecurityGroup
 # https://www.terraform.io/docs/providers/aws/r/security_group.html
 resource "aws_security_group" "ecs" {
-  name        = "handson-ecs"
-  description = "handson ecs"
+  name        = "go-ecs"
+  description = "go-app ecs"
 
   # セキュリティグループを配置するVPC
   vpc_id      = "${aws_vpc.main.id}"
@@ -193,7 +193,7 @@ resource "aws_security_group" "ecs" {
   }
 
   tags = {
-    Name = "handson-ecs"
+    Name = "go-ecs"
   }
 }
 
@@ -217,7 +217,7 @@ resource "aws_security_group_rule" "ecs" {
 # ECS Service
 # https://www.terraform.io/docs/providers/aws/r/ecs_service.html
 resource "aws_ecs_service" "main" {
-  name = "handson"
+  name = "go-service"
 
   # 依存関係の記述。
   # "aws_lb_listener_rule.main" リソースの作成が完了するのを待ってから当該リソースの作成を開始する。
