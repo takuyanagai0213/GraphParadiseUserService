@@ -132,42 +132,42 @@ resource "aws_ecs_cluster" "main" {
 }
 # ELB Target Group
 # https://www.terraform.io/docs/providers/aws/r/lb_target_group.html
-# resource "aws_lb_target_group" "main" {
-#   name = "go-elb"
+resource "aws_lb_target_group" "main" {
+  name = "go-elb"
 
-#   # ターゲットグループを作成するVPC
-#   vpc_id = "${aws_vpc.main.id}"
+  # ターゲットグループを作成するVPC
+  vpc_id = "${aws_vpc.main.id}"
 
-#   # ALBからECSタスクのコンテナへトラフィックを振り分ける設定
-#   port        = 80
-#   protocol    = "HTTP"
-#   target_type = "ip"
+  # ALBからECSタスクのコンテナへトラフィックを振り分ける設定
+  port        = 80
+  protocol    = "HTTP"
+  target_type = "ip"
 
-#   # コンテナへの死活監視設定
-#   health_check = {
-#     port = 80
-#     path = "/"
-#   }
-# }
+  # コンテナへの死活監視設定
+  health_check = {
+    port = 80
+    path = "/"
+  }
+}
 
 # ALB Listener Rule
 # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
-# resource "aws_lb_listener_rule" "main" {
-#   # ルールを追加するリスナー
-#   listener_arn = "${aws_lb_listener.main.arn}"
+resource "aws_lb_listener_rule" "main" {
+  # ルールを追加するリスナー
+  listener_arn = "${aws_lb_listener.main.arn}"
 
-#   # 受け取ったトラフィックをターゲットグループへ受け渡す
-#   action {
-#     type             = "forward"
-#     target_group_arn = "${aws_lb_target_group.main.id}"
-#   }
+  # 受け取ったトラフィックをターゲットグループへ受け渡す
+  action {
+    type             = "forward"
+    target_group_arn = "${aws_lb_target_group.main.id}"
+  }
 
-#   # ターゲットグループへ受け渡すトラフィックの条件
-#   condition {
-#     field  = "path-pattern"
-#     values = ["*"]
-#   }
-# }
+  # ターゲットグループへ受け渡すトラフィックの条件
+  condition {
+    field  = "path-pattern"
+    values = ["*"]
+  }
+}
 # SecurityGroup
 # https://www.terraform.io/docs/providers/aws/r/security_group.html
 resource "aws_security_group" "ecs" {
@@ -222,7 +222,7 @@ resource "aws_ecs_service" "main" {
   # 依存関係の記述。
   # "aws_lb_listener_rule.main" リソースの作成が完了するのを待ってから当該リソースの作成を開始する。
   # "depends_on" は "aws_ecs_service" リソース専用のプロパティではなく、Terraformのシンタックスのため他の"resource"でも使用可能
-  # depends_on = ["aws_lb_listener_rule.main"]
+  depends_on = ["aws_lb_listener_rule.main"]
 
   # 当該ECSサービスを配置するECSクラスターの指定
   cluster = "${aws_ecs_cluster.main.name}"
@@ -247,11 +247,11 @@ resource "aws_ecs_service" "main" {
   }
 
   # ECSタスクの起動後に紐付けるELBターゲットグループ
-  # load_balancer = [
-  #   {
-  #     target_group_arn = "${aws_lb_target_group.main.arn}"
-  #     container_name   = "nginx"
-  #     container_port   = "80"
-  #   },
-  # ]
+  load_balancer = [
+    {
+      target_group_arn = "${aws_lb_target_group.main.arn}"
+      container_name   = "web"
+      container_port   = "80"
+    },
+  ]
 }
