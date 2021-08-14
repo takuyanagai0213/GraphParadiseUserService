@@ -47,6 +47,17 @@ resource "aws_subnet" "public_1c" {
     Name = "go-public-subnet-1c"
   }
 }
+resource "aws_subnet" "public_1a" {
+  vpc_id = aws_vpc.main.id
+
+  availability_zone = "us-west-2c"
+
+  cidr_block = "192.168.2.0/24"
+
+  tags = {
+    Name = "go-public-subnet-1c"
+  }
+}
 # Internet Gateway
 # https://www.terraform.io/docs/providers/aws/r/internet_gateway.html
 resource "aws_internet_gateway" "main" {
@@ -191,7 +202,7 @@ resource "aws_lb" "main" {
   name               = "app-lb"
 
   security_groups = ["${aws_security_group.alb.id}"]
-  subnets         = ["${aws_subnet.public_1c.id}"]
+  subnets         = ["${aws_subnet.public_1c.id}","${aws_subnet.public_1a.id}"]
 }
 
 # Listener
