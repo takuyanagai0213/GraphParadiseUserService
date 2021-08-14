@@ -152,8 +152,8 @@ resource "aws_lb_target_group" "main" {
 # SecurityGroup
 # https://www.terraform.io/docs/providers/aws/r/security_group.html
 resource "aws_security_group" "alb" {
-  name        = "handson-alb"
-  description = "handson alb"
+  name        = "app-alb"
+  description = "app alb"
   vpc_id      = aws_vpc.main.id
 
   # セキュリティグループ内のリソースからインターネットへのアクセスを許可する
@@ -165,7 +165,7 @@ resource "aws_security_group" "alb" {
   }
 
   tags = {
-    Name = "handson-alb"
+    Name = "app-alb"
   }
 }
 
@@ -188,7 +188,7 @@ resource "aws_security_group_rule" "alb_http" {
 # https://www.terraform.io/docs/providers/aws/d/lb.html
 resource "aws_lb" "main" {
   load_balancer_type = "application"
-  name               = "handson"
+  name               = "app-lb"
 
   security_groups = ["${aws_security_group.alb.id}"]
   subnets         = ["${aws_subnet.public_1c.id}"]
