@@ -30,7 +30,7 @@ data "aws_iam_policy_document" "assume_role" {
 # VPC
 # https://www.terraform.io/docs/providers/aws/r/vpc.html
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = "192.168.0.0/16"
 
   tags = {
     Name = "go-vpc"
@@ -41,7 +41,7 @@ resource "aws_subnet" "public_1c" {
 
   availability_zone = "us-west-2a"
 
-  cidr_block = "10.0.2.0/24"
+  cidr_block = "192.168.1.0/24"
 
   tags = {
     Name = "go-public-subnet-1c"
@@ -278,7 +278,7 @@ resource "aws_security_group_rule" "ecs" {
   protocol  = "tcp"
 
   # 同一VPC内からのアクセスのみ許可
-  cidr_blocks = ["10.0.0.0/16"]
+  cidr_blocks = ["192.168.0.0/16"]
 }
 
 # ECS Service
