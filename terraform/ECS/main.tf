@@ -133,7 +133,7 @@ resource "aws_ecs_cluster" "main" {
 # ELB Target Group
 # https://www.terraform.io/docs/providers/aws/r/lb_target_group.html
 resource "aws_lb_target_group" "main" {
-  name = "go-elb"
+  name = "handson"
 
   # ターゲットグループを作成するVPC
   vpc_id = aws_vpc.main.id
