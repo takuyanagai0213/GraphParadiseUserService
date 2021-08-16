@@ -240,9 +240,9 @@ resource "aws_ecs_service" "main" {
   name = "go-service"
 
   # 依存関係の記述。
-  # "aws_lb_listener_rule.main" リソースの作成が完了するのを待ってから当該リソースの作成を開始する。
+  # "aws_lb_listener_rule.http_to_https" リソースの作成が完了するのを待ってから当該リソースの作成を開始する。
   # "depends_on" は "aws_ecs_service" リソース専用のプロパティではなく、Terraformのシンタックスのため他の"resource"でも使用可能
-  depends_on = ["aws_lb_listener_rule.main"]
+  depends_on = ["aws_lb_listener_rule.http_to_https"]
 
   # 当該ECSサービスを配置するECSクラスターの指定
   cluster = aws_ecs_cluster.main.name
@@ -275,7 +275,7 @@ resource "aws_ecs_service" "main" {
 }
 variable "domain" {
   description = "Route 53 で管理しているドメイン名"
-  type        = "string"
+  type        = string
 
   #FIXME:
   default = "www.graph-paradise.com"
@@ -284,14 +284,14 @@ variable "domain" {
 # Route53 Hosted Zone
 # https://www.terraform.io/docs/providers/aws/d/route53_zone.html
 data "aws_route53_zone" "main" {
-  name         = "${var.domain}"
+  name         = "graph-paradise.com"
   private_zone = false
 }
 
 # ACM
 # https://www.terraform.io/docs/providers/aws/r/acm_certificate.html
 resource "aws_acm_certificate" "main" {
-  domain_name = "${var.domain}"
+  domain_name = "graph-paradise.com"
 
   validation_method = "DNS"
 
@@ -308,10 +308,17 @@ resource "aws_route53_record" "validation" {
   zone_id = "${data.aws_route53_zone.main.id}"
 
   ttl = 60
-
-  name    = "${aws_acm_certificate.main.domain_validation_options.0.resource_record_name}"
-  type    = "${aws_acm_certificate.main.domain_validation_options.0.resource_record_type}"
-  records = ["${aws_acm_certificate.main.domain_validation_options.0.resource_record_value}"]
+  for_each = {
+    for dvo in aws_acm_certificate.main.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+  allow_overwrite = true
+  name            = each.value.name
+  records         = [each.value.record]
+  type            = each.value.type
 }
 
 # ACM Validate
@@ -319,7 +326,7 @@ resource "aws_route53_record" "validation" {
 resource "aws_acm_certificate_validation" "main" {
   certificate_arn = "${aws_acm_certificate.main.arn}"
 
-  validation_record_fqdns = ["${aws_route53_record.validation.0.fqdn}"]
+  validation_record_fqdns = [for record in aws_route53_record.validation : record.fqdn]
 }
 
 # Route53 record
@@ -327,10 +334,10 @@ resource "aws_acm_certificate_validation" "main" {
 resource "aws_route53_record" "main" {
   type = "A"
 
-  name    = "${var.domain}"
+  name    = "graph-paradise.com"
   zone_id = "${data.aws_route53_zone.main.id}"
 
-  alias = {
+  alias {
     name                   = "${aws_lb.main.dns_name}"
     zone_id                = "${aws_lb.main.zone_id}"
     evaluate_target_health = true
@@ -356,7 +363,7 @@ resource "aws_lb_listener" "https" {
 # ALB Listener Rule
 # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
 resource "aws_lb_listener_rule" "http_to_https" {
-  listener_arn = "${aws_lb_listener.main.arn}"
+  listener_arn = "${aws_lb_listener.https.arn}"
 
   priority = 99
 
@@ -371,8 +378,9 @@ resource "aws_lb_listener_rule" "http_to_https" {
   }
 
   condition {
-    field  = "host-header"
-    values = ["${var.domain}"]
+    path_pattern {
+      values = ["graph-paradise.com"]
+    }
   }
 }
 
