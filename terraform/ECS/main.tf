@@ -139,7 +139,7 @@ resource "aws_iam_role" "ecs_task_execution_role" {
 # ECS Cluster
 # https://www.terraform.io/docs/providers/aws/r/ecs_cluster.html
 resource "aws_ecs_cluster" "main" {
-  name = "test_cluster"
+  name = "go-cluster"
 }
 # ELB Target Group
 # https://www.terraform.io/docs/providers/aws/r/lb_target_group.html
