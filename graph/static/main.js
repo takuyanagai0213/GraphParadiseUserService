@@ -89,7 +89,7 @@ class chart {
           label: '最高気温(度）',
           data: json,
           // borderColor: "rgba(255,0,0,1)",
-          backgroundColor: "rgb(0, 255, 0)"
+          backgroundColor: "rgb(255, 100, 0)"
         },
         // {
         //   label: '最高気温(度）',
