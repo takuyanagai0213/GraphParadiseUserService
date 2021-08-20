@@ -1,14 +1,14 @@
 version: '3'
 services:
-  # go:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/golang/Dockerfile
-  #   # volumes: 
-  #   #   - .:/app
-  #   ports:
-  #     - 80:80
-  #   tty: true
+  go:
+    build:
+      context: ./auth
+      dockerfile: ./dev/Dockerfile
+    volumes: 
+      - ./auth:/app/go
+    ports:
+      - 80:80
+    tty: true
   graph:
     build:
       context: ./graph
