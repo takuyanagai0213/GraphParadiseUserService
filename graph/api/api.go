@@ -23,14 +23,23 @@ func GetRooms(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
 }
+func GetDates(w http.ResponseWriter, r *http.Request) {
+	var data = make([]int, 30)
+	for i := 0; i < 30; i++ {
+		data[i] = rand.Intn(100)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
+}
 func GetData1(w http.ResponseWriter, r *http.Request) {
 	data := createDummyData()
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
 }
-func GetData2(w http.ResponseWriter, r *http.Request) {
-	data := createDummyData()
+func GetDataForDaily(w http.ResponseWriter, r *http.Request) {
+	data := createDummyDataForMonth()
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
@@ -45,6 +54,14 @@ func GetData3(w http.ResponseWriter, r *http.Request) {
 func createDummyData() []int {
 	var data = make([]int, 10)
 	for i := 0; i < 10; i++ {
+		data[i] = rand.Intn(100)
+	}
+
+	return data
+}
+func createDummyDataForMonth() []int {
+	var data = make([]int, 30)
+	for i := 0; i < 30; i++ {
 		data[i] = rand.Intn(100)
 	}
 

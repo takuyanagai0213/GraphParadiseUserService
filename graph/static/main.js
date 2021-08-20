@@ -21,6 +21,19 @@ class chart {
         self.drowRadarChart(json, rooms, "myChart4");
       });
     });
+    $.ajax({
+      url: '/getDataForDaily',
+      type: "get",
+      dataType: 'json',
+    }).then(function (json) {
+      $.ajax({
+        url: '/getDates',
+        type: "get",
+        dataType: 'json',
+      }).then(function (dates) {
+        self.drowLineChart(json, dates, "myChart2");
+      });
+    });
   }
   drowChart(json, rooms, target) {
     console.log(json)
@@ -64,13 +77,13 @@ class chart {
     }
   });
   }
-  drowLineChart(json, rooms, target) {
+  drowLineChart(json, dates, target) {
     console.log(json)
     var ctx = document.getElementById(target);
     var myChart = new Chart(ctx, {
       type: 'line',
       data: {
-      labels: rooms,
+      labels: dates,
       datasets: [
         {
           label: '最高気温(度）',
