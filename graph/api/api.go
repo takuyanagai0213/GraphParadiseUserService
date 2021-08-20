@@ -7,6 +7,22 @@ import (
 	// "github.com/jinzhu/gorm"
 )
 
+func GetRooms(w http.ResponseWriter, r *http.Request) {
+	var data = make([]string, 10)
+	data[0] = "部屋1"
+	data[1] = "部屋2"
+	data[2] = "部屋3"
+	data[3] = "部屋4"
+	data[4] = "部屋5"
+	data[5] = "部屋6"
+	data[6] = "部屋7"
+	data[7] = "部屋8"
+	data[8] = "部屋9"
+	data[9] = "部屋10"
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
+}
 func GetData1(w http.ResponseWriter, r *http.Request) {
 	data := createDummyData()
 

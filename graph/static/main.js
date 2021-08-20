@@ -1,28 +1,45 @@
-console.log('www')
+var rooms = [];
 class chart {
-  constructor(json){
-    console.log(this.json)
+  constructor(){
+    this.rooms = []
   }
-  drowChart(json, target){
+  createGraph() {
+    const self = this;
+    $.ajax({
+      url: '/getData1',
+      type: "get",
+      dataType: 'json',
+    }).then(function (json) {
+      $.ajax({
+        url: '/getRooms',
+        type: "get",
+        dataType: 'json',
+      }).then(function (rooms) {
+        self.drowChart(json, rooms, "myChart1");
+        self.drowLineChart(json, rooms, "myChart2");
+      });
+    });
+  }
+  drowChart(json, rooms, target) {
     console.log(json)
     var ctx = document.getElementById(target);
     var myChart = new Chart(ctx, {
-      type: 'line',
+      type: 'bar',
       data: {
-      labels: ['8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日'],
+      labels: rooms,
       datasets: [
         {
           label: '最高気温(度）',
           data: json,
-          borderColor: "rgba(255,0,0,1)",
-          backgroundColor: "rgba(0,0,0,0)"
+          // borderColor: "rgba(255,0,0,1)",
+          backgroundColor: "rgb(0, 255, 0)"
         },
-        {
-          label: '最高気温(度）',
-          data: json,
-          borderColor: "rgba(255,0,0,1)",
-          backgroundColor: "rgba(0,0,0,0)"
-        },
+        // {
+        //   label: '最高気温(度）',
+        //   data: json,
+        //   borderColor: "rgba(255,0,0,1)",
+        //   backgroundColor: "rgba(0,0,0,0)"
+        // },
       ],
     },
     options: {
@@ -41,57 +58,53 @@ class chart {
             }
           }
         }]
-      },
+      }
     }
-    });
+  });
+  }
+  drowLineChart(json, rooms, target) {
+    console.log(json)
+    var ctx = document.getElementById(target);
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+      labels: rooms,
+      datasets: [
+        {
+          label: '最高気温(度）',
+          data: json,
+          // borderColor: "rgba(255,0,0,1)",
+          backgroundColor: "rgb(0, 255, 0)"
+        },
+        // {
+        //   label: '最高気温(度）',
+        //   data: json,
+        //   borderColor: "rgba(255,0,0,1)",
+        //   backgroundColor: "rgba(0,0,0,0)"
+        // },
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: '気温（8月1日~8月7日）'
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            suggestedMax: 40,
+            suggestedMin: 0,
+            stepSize: 10,
+            callback: function(value, index, values){
+              return  value +  '度'
+            }
+          }
+        }]
+      }
+    }
+  });
   }
 }
 const chartClass = new chart();
-$.ajax({
-  url: '/getData1',
-  type: "get",
-  dataType: 'json',
-}).then(function (json) {
-  console.log(json)
-  chartClass.drowChart(json, "myChart1");
-});
-$.ajax({
-  url: '/getData2',
-  type: "get",
-  dataType: 'json',
-}).then(function (json) {
-  console.log(json)
-  chartClass.drowChart(json, "myChart2");
-});
-$.ajax({
-  url: '/getData3',
-  type: "get",
-  dataType: 'json',
-}).then(function (json) {
-  console.log(json)
-  chartClass.drowChart(json, "myChart3");
-});
-$.ajax({
-  url: '/getData3',
-  type: "get",
-  dataType: 'json',
-}).then(function (json) {
-  console.log(json)
-  chartClass.drowChart(json, "myChart4");
-});
-$.ajax({
-  url: '/getData2',
-  type: "get",
-  dataType: 'json',
-}).then(function (json) {
-  console.log(json)
-  chartClass.drowChart(json, "myChart5");
-});
-$.ajax({
-  url: '/getData1',
-  type: "get",
-  dataType: 'json',
-}).then(function (json) {
-  console.log(json)
-  chartClass.drowChart(json, "myChart6");
-});
+
+chartClass.createGraph()

@@ -13,6 +13,7 @@ func main() {
 	dir, _ := os.Getwd()
 
 	http.HandleFunc("/graph", graph)
+	http.HandleFunc("/getRooms", api.GetRooms)
 	http.HandleFunc("/getData1", api.GetData1)
 	http.HandleFunc("/getData2", api.GetData2)
 	http.HandleFunc("/getData3", api.GetData3)
