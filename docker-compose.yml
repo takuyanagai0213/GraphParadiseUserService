@@ -1,13 +1,22 @@
 version: '3'
 services:
-  go:
+  # go:
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/golang/Dockerfile
+  #   # volumes: 
+  #   #   - .:/app
+  #   ports:
+  #     - 80:80
+  #   tty: true
+  graph:
     build:
-      context: .
-      dockerfile: ./docker/golang/Dockerfile
-    # volumes: 
-    #   - .:/app
+      context: ./graph
+      dockerfile: ./dev/Dockerfile
+    volumes: 
+      - ./graph:/app/go
     ports:
-      - 80:80
+      - 90:80
     tty: true
 #     depends_on: 
 #       - mysql
