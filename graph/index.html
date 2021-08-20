@@ -16,20 +16,54 @@
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrapper site-header__wrapper">
-      <a href="#" class="brand">Brand</a>
-      <nav class="nav">
-        <button class="nav__toggle" aria-expanded="false" type="button">
-          menu
-        </button>
-        <ul class="nav__wrapper">
-          <li class="nav__item"><a href="#">Home</a></li>
-          <li class="nav__item"><a href="#">About</a></li>
-        </ul>
-      </nav>
+  <header class="navbar">
+    <div class="navbar-brand">
+        <span class="navbar-item">
+            <span class="fa fa-language"></span>一言SNS
+        </span>
     </div>
-  </header>
+    <div class="navbar-end">
+      <div class="navbar-item">
+          <div class="field has-addons">
+            <div class="control">
+                <input class="input" type="text" name="search" placeholder="キーワード検索">
+            </div>
+            <div class="control">
+                <a class="button is-info"><i class="fa fa-search"></i>検索</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar-item">
+        <a href="#"><i class="fa fa-user"></i>ログイン</a>
+      </div>
+    </div>
+</header>
+<div class="hero is-info is-bold">
+  <div class="hero-body">
+      <div class="container">
+         <h1 class="title">CASAREAL</h1>
+         <h2 class="subtitle">@casareal-ls</h2>
+      </div>
+  </div>
+</div>
+<section class="level">
+  <div class="level-left"></div>
+  <div class="level-right">
+    <div class="level-item tabs">
+      <ul>
+        <li class="is-active"><a>最近の一言</a></li>
+          <li><a>古い一言</a></li>
+          <li><a>コメント付き</a></li>
+        </ul>
+     </div>
+  </div>
+  <div class="level-right">
+    <div class="level-item">
+      <a class="button is-greylight">フォロー</a>
+    </div>
+  </div>
+</section>
   <div class="container">
     <div class="columns">
       <div class="column">
