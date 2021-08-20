@@ -18,6 +18,15 @@ services:
     ports:
       - 90:80
     tty: true
+  users:
+    build:
+      context: ./users
+      dockerfile: ./dev/Dockerfile
+    volumes: 
+      - ./graph:/app/go
+    ports:
+      - 90:80
+    tty: true
 #     depends_on: 
 #       - mysql
 #   mysql:
