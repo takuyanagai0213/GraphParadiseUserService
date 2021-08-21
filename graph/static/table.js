@@ -6,33 +6,54 @@ class table {
   createTable() {
     const self = this;
     $.ajax({
-      url: '/getData1',
+      url: '/getRooms',
       type: "get",
       dataType: 'json',
-    }).then(function (json) {
-      $.ajax({
-        url: '/getRooms',
-        type: "get",
-        dataType: 'json',
-      }).then(function (rooms) {
-        self.drowChart(json, rooms, "myChart1");
-        self.drowLineChart(json, rooms, "myChart2");
-        self.drowPieChart(json, rooms, "myChart3");
-        self.drowRadarChart(json, rooms, "myChart4");
-      });
-    });
-    $.ajax({
-      url: '/getDataForDaily',
-      type: "get",
-      dataType: 'json',
-    }).then(function (json) {
+    }).then(function (rooms) {
       $.ajax({
         url: '/getDates',
         type: "get",
         dataType: 'json',
       }).then(function (dates) {
-        self.drowLineChart(json, dates, "myChart2");
+        console.log(rooms)
+
+        $('#thead').append(
+          '<tr id="tr_dates">'
+          + '<th></th>'
+          + '<tr>'
+        );
+        for (let key in dates) {
+          $('#tr_dates').append(
+            '<td>' + dates[key] + '日</td>'
+          )
+        }
       });
+      for (let key in rooms) {
+        const room_name = rooms[key];
+        $.ajax({
+          url: '/GetDataForTable',
+          type: "get",
+          data: room_name,
+          dataType: 'json',
+        }).then(function (json) {
+          const id = 'tr_' + room_name;
+          $('#tbody').append(
+            '<tr id=' + id + '>'
+            + '</tr>'
+
+          );
+
+          $('#' + id).append(
+            '<th>' + room_name + '</th>'
+            +    '<td>2</td>'
+            +    '<td>2</td>'
+            +    '<td>2</td>'
+            +    '<td>2</td>'
+            +    '<td>2</td>'
+            +    '<td>2</td>'
+          )
+        });
+      }
     });
   }
 }
