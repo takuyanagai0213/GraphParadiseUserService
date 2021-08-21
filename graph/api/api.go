@@ -49,12 +49,19 @@ func GetDataForDaily(w http.ResponseWriter, r *http.Request) {
 	for i := 0; i < 30; i++ {
 		temp[i] = rand.Intn(100)
 	}
+	var co2 = make([]int, 30)
+
+	for i := 0; i < 30; i++ {
+		co2[i] = rand.Intn(100)
+	}
 	fmt.Println(temp)
 	var data []interface{}
 	var buf map[string]interface{}
 	for i := 1; i < 11; i++ {
 		buf = map[string]interface{}{}
-		buf[strconv.Itoa(i)] = temp
+		buf["room_no"] = strconv.Itoa(i)
+		buf["temp"] = temp
+		buf["co2"] = co2
 		data = append(data, buf)
 	}
 	w.Header().Set("Content-Type", "application/json")
