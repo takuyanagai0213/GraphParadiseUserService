@@ -31,7 +31,7 @@ class table {
         }
       });
       for (let key in rooms) {
-        const room_name = rooms[key];
+        const room_name = rooms[key]["room_name"];
         $.ajax({
           url: '/GetDataForTable',
           type: "get",
@@ -41,7 +41,7 @@ class table {
           const id = 'tr_' + room_name;
           $('#tbody').append(
             '<tr id=' + id + '>'
-            + '<th>1'
+            + '<th>' + rooms[key]["room_no"]
             + '</th>'
             + '<th>'
             + '<a href="" title="Leicester City F.C.">' + room_name + '</a>'
