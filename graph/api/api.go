@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -43,8 +44,19 @@ func GetData1(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(data)
 }
 func GetDataForDaily(w http.ResponseWriter, r *http.Request) {
-	data := createDummyDataForMonth()
+	var temp = make([]int, 30)
 
+	for i := 0; i < 30; i++ {
+		temp[i] = rand.Intn(100)
+	}
+	fmt.Println(temp)
+	var data []interface{}
+	var buf map[string]interface{}
+	for i := 1; i < 11; i++ {
+		buf = map[string]interface{}{}
+		buf[strconv.Itoa(i)] = temp
+		data = append(data, buf)
+	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
 }
