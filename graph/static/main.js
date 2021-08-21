@@ -36,7 +36,6 @@ class chart {
     });
   }
   drowChart(json, rooms, target) {
-    console.log(json)
     var ctx = document.getElementById(target);
     var myChart = new Chart(ctx, {
       type: 'bar',
@@ -78,7 +77,6 @@ class chart {
   });
   }
   drowLineChart(json, dates, target) {
-    console.log(json)
     var ctx = document.getElementById(target);
     var myChart = new Chart(ctx, {
       type: 'line',
@@ -120,7 +118,6 @@ class chart {
   });
   }
   drowPieChart(json, rooms, target) {
-    console.log(json)
     var ctx = document.getElementById(target);
     var myChart = new Chart(ctx, {
       type: 'pie',
@@ -162,7 +159,6 @@ class chart {
   });
   }
   drowRadarChart(json, rooms, target) {
-    console.log(json)
     var ctx = document.getElementById(target);
     var myChart = new Chart(ctx, {
       type: 'radar',
