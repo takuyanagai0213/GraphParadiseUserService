@@ -4,21 +4,25 @@ import (
 	"encoding/json"
 	"math/rand"
 	"net/http"
+	"strconv"
 	// "github.com/jinzhu/gorm"
 )
 
+type Room struct {
+	room_no   string
+	room_name string
+}
+
 func GetRooms(w http.ResponseWriter, r *http.Request) {
-	var data = make([]string, 10)
-	data[0] = "部屋1"
-	data[1] = "部屋2"
-	data[2] = "部屋3"
-	data[3] = "部屋4"
-	data[4] = "部屋5"
-	data[5] = "部屋6"
-	data[6] = "部屋7"
-	data[7] = "部屋8"
-	data[8] = "部屋9"
-	data[9] = "部屋10"
+	var data []interface{}
+
+	var buf map[string]interface{}
+	for i := 1; i < 11; i++ {
+		buf = map[string]interface{}{}
+		buf["room_name"] = "部屋" + strconv.Itoa(i)
+		buf["room_no"] = strconv.Itoa(i)
+		data = append(data, buf)
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)

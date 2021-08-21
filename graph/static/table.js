@@ -10,6 +10,7 @@ class table {
       type: "get",
       dataType: 'json',
     }).then(function (rooms) {
+      console.log(rooms)
       $.ajax({
         url: '/getDates',
         type: "get",
