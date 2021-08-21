@@ -60,13 +60,6 @@ func GetDataForDaily(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
 }
-func GetData3(w http.ResponseWriter, r *http.Request) {
-	data := createDummyData()
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(data)
-}
-
 func createDummyData() []int {
 	var data = make([]int, 10)
 	for i := 0; i < 10; i++ {
