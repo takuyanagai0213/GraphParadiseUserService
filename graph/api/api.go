@@ -75,14 +75,6 @@ func createDummyData() []int {
 
 	return data
 }
-func createDummyDataForMonth() []int {
-	var data = make([]int, 30)
-	for i := 0; i < 30; i++ {
-		data[i] = rand.Intn(100)
-	}
-
-	return data
-}
 func GetDataForTable(w http.ResponseWriter, r *http.Request) {
 	data := createDummyData()
 
