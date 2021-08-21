@@ -19,7 +19,8 @@ class table {
 
         $('#thead').append(
           '<tr id="tr_dates">'
-          + '<th></th>'
+          + '<th>No</th>'
+          + '<th>Room</th>'
           + '<tr>'
         );
         for (let key in dates) {
@@ -39,19 +40,26 @@ class table {
           const id = 'tr_' + room_name;
           $('#tbody').append(
             '<tr id=' + id + '>'
+            + '<th>1'
+            + '</th>'
+            + '<th>'
+            + '<a href="" title="Leicester City F.C.">' + room_name + '</a>'
+            // + '<td>' + room_name + '</td>'
+            + '</th>'
             + '</tr>'
 
           );
-
-          $('#' + id).append(
-            '<th>' + room_name + '</th>'
-            +    '<td>2</td>'
-            +    '<td>2</td>'
-            +    '<td>2</td>'
-            +    '<td>2</td>'
-            +    '<td>2</td>'
-            +    '<td>2</td>'
-          )
+          $.ajax({
+            url: '/getDates',
+            type: "get",
+            dataType: 'json',
+          }).then(function (dates) {
+            for (let key in dates) {
+              $('#' + id).append(
+                '<td>' + dates[key] + '</td>'
+              )
+            }
+          });
         });
       }
     });
