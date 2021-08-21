@@ -67,3 +67,9 @@ func createDummyDataForMonth() []int {
 
 	return data
 }
+func GetDataForTable(w http.ResponseWriter, r *http.Request) {
+	data := createDummyData()
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
+}
