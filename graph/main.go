@@ -3,7 +3,6 @@ package main
 import (
 	"graph_paradise/api"
 	"html/template"
-	"log"
 	"net/http"
 	"os"
 	// "github.com/jinzhu/gorm"
@@ -25,7 +24,6 @@ func main() {
 }
 
 func graph(w http.ResponseWriter, r *http.Request) {
-	log.Print("api/")
 	t, err := template.ParseFiles("index.html")
 	if err != nil {
 		panic(err.Error())
