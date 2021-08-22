@@ -20,7 +20,11 @@ Graph_Trigger.prototype.createGraph = function() {
   this.getDataByArea();
 }
 Graph_Trigger.prototype.createAreaSelectBox = function(areas) {
-  console.log(areas)
+  $('.select').append(
+    '<select id="area_select">'
+    + '</select>'
+  );
+  
   for(let key in areas){
     $('#area_select').append('<option value=' + areas[key]['area_no'] + '>' + areas[key]['area_name'] + '</option>')
   }
@@ -52,7 +56,7 @@ Graph_Trigger.prototype.drowChart = function(data) {
   options: {
     title: {
       display: true,
-      text: '気温（8月1日~8月7日）'
+      text: '各部屋の現在の気温'
     },
     scales: {
       yAxes: [{
