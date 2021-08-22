@@ -10,13 +10,11 @@ class table {
       type: "get",
       dataType: 'json',
     }).then(function (rooms) {
-      console.log(rooms)
       $.ajax({
         url: '/getDates',
         type: "get",
         dataType: 'json',
       }).then(function (dates) {
-        console.log(rooms)
 
         $('#thead').append(
           '<tr id="tr_dates">'
