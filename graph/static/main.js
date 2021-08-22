@@ -7,18 +7,35 @@ Graph_Trigger.prototype.def_s = new Object({
   room_name_list: []
 });
 Graph_Trigger.prototype.createGraph = function() {
-  const self = this;
   $.ajax({
     url: '/getRooms',
     type: "get",
     dataType: 'json',
   }).then(this.formatRoomData.bind(this));
   $.ajax({
+    url: '/getAreas',
+    type: "get",
+    dataType: 'json',
+  }).then(this.createAreaSelectBox.bind(this));
+  this.getDataByArea();
+}
+Graph_Trigger.prototype.createAreaSelectBox = function(areas) {
+  console.log(areas)
+  for(let key in areas){
+    $('#area_select').append('<option value=' + areas[key]['area_no'] + '>' + areas[key]['area_name'] + '</option>')
+  }
+  $('#area_select').change(this.getDataByArea.bind(this))
+
+}
+Graph_Trigger.prototype.getDataByArea = function() {
+  console.log('get')
+  $.ajax({
     url: '/getData1',
     type: "get",
     dataType: 'json',
   }).then(this.drowChart.bind(this));
 }
+
 Graph_Trigger.prototype.drowChart = function(data) {
   var ctx = document.getElementById('myChart1');
   var myChart = new Chart(ctx, {
