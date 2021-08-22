@@ -17,10 +17,31 @@ Graph_Trigger.prototype.createGraph = function() {
     type: "get",
     dataType: 'json',
   }).then(this.createAreaSelectBox.bind(this));
+  this.getDataTypeList();
   this.getDataByArea();
+
+}
+Graph_Trigger.prototype.getDataTypeList = function(areas) {
+  $.ajax({
+    url: '/getDataTypeList',
+    type: "get",
+    dataType: 'json',
+  }).then(this.createDataTypeSelectBox.bind(this));
+}
+Graph_Trigger.prototype.createDataTypeSelectBox = function(data_type_list) {
+  $('#data_type_select_area').append(
+    '<select id="data_type_select">'
+    + '</select>'
+  );
+  
+  for(let key in data_type_list){
+    $('#data_type_select').append('<option value=' + data_type_list[key]['data_type_no'] + '>' + data_type_list[key]['data_type_name'] + '</option>')
+  }
+  // $('#data_type_select').change(this.getDataByArea.bind(this))
+
 }
 Graph_Trigger.prototype.createAreaSelectBox = function(areas) {
-  $('.select').append(
+  $('#area_select_area').append(
     '<select id="area_select">'
     + '</select>'
   );

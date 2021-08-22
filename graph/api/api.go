@@ -14,6 +14,22 @@ type Room struct {
 	room_name string
 }
 
+func GetDataTypeList(w http.ResponseWriter, r *http.Request) {
+	var data_type_list []interface{}
+
+	var buf map[string]interface{}
+	buf = map[string]interface{}{}
+	buf["data_type_no"] = "1"
+	buf["data_type_name"] = "温度"
+	data_type_list = append(data_type_list, buf)
+	buf = map[string]interface{}{}
+	buf["data_type_no"] = "2"
+	buf["data_type_name"] = "湿度"
+	data_type_list = append(data_type_list, buf)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data_type_list)
+}
 func GetAreas(w http.ResponseWriter, r *http.Request) {
 	var area_info []interface{}
 

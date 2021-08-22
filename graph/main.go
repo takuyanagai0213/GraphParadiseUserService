@@ -14,6 +14,7 @@ func main() {
 	http.HandleFunc("/graph", graph)
 	http.HandleFunc("/getRooms", api.GetRooms)
 	http.HandleFunc("/getAreas", api.GetAreas)
+	http.HandleFunc("/getDataTypeList", api.GetDataTypeList)
 	http.HandleFunc("/getDates", api.GetDates)
 	http.HandleFunc("/getData1", api.GetData1)
 	http.HandleFunc("/GetDataForTable", api.GetDataForTable)
