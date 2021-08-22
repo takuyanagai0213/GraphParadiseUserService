@@ -16,8 +16,8 @@ func main() {
 	http.HandleFunc("/getRooms", api.GetRooms)
 	http.HandleFunc("/getDates", api.GetDates)
 	http.HandleFunc("/getData1", api.GetData1)
+	http.HandleFunc("/GetDataForTable", api.GetDataForTable)
 	http.HandleFunc("/getDataForDaily", api.GetDataForDaily)
-	http.HandleFunc("/getData3", api.GetData3)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(dir+"/static/"))))
 	// port
 	http.ListenAndServe(":80", nil)

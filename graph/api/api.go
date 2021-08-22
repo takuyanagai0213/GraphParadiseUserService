@@ -2,23 +2,28 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"math/rand"
 	"net/http"
+	"strconv"
 	// "github.com/jinzhu/gorm"
 )
 
+type Room struct {
+	room_no   string
+	room_name string
+}
+
 func GetRooms(w http.ResponseWriter, r *http.Request) {
-	var data = make([]string, 10)
-	data[0] = "部屋1"
-	data[1] = "部屋2"
-	data[2] = "部屋3"
-	data[3] = "部屋4"
-	data[4] = "部屋5"
-	data[5] = "部屋6"
-	data[6] = "部屋7"
-	data[7] = "部屋8"
-	data[8] = "部屋9"
-	data[9] = "部屋10"
+	var data []interface{}
+
+	var buf map[string]interface{}
+	for i := 1; i < 11; i++ {
+		buf = map[string]interface{}{}
+		buf["room_name"] = "部屋" + strconv.Itoa(i)
+		buf["room_no"] = strconv.Itoa(i)
+		data = append(data, buf)
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
@@ -39,18 +44,29 @@ func GetData1(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(data)
 }
 func GetDataForDaily(w http.ResponseWriter, r *http.Request) {
-	data := createDummyDataForMonth()
+	var temp = make([]int, 30)
 
+	for i := 0; i < 30; i++ {
+		temp[i] = rand.Intn(100)
+	}
+	var co2 = make([]int, 30)
+
+	for i := 0; i < 30; i++ {
+		co2[i] = rand.Intn(100)
+	}
+	fmt.Println(temp)
+	var data []interface{}
+	var buf map[string]interface{}
+	for i := 1; i < 11; i++ {
+		buf = map[string]interface{}{}
+		buf["room_no"] = strconv.Itoa(i)
+		buf["temp"] = temp
+		buf["co2"] = co2
+		data = append(data, buf)
+	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
 }
-func GetData3(w http.ResponseWriter, r *http.Request) {
-	data := createDummyData()
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(data)
-}
-
 func createDummyData() []int {
 	var data = make([]int, 10)
 	for i := 0; i < 10; i++ {
@@ -59,11 +75,9 @@ func createDummyData() []int {
 
 	return data
 }
-func createDummyDataForMonth() []int {
-	var data = make([]int, 30)
-	for i := 0; i < 30; i++ {
-		data[i] = rand.Intn(100)
-	}
+func GetDataForTable(w http.ResponseWriter, r *http.Request) {
+	data := createDummyData()
 
-	return data
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
 }
