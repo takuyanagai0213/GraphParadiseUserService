@@ -28,7 +28,6 @@ Graph_Trigger.prototype.createAreaSelectBox = function(areas) {
 
 }
 Graph_Trigger.prototype.getDataByArea = function() {
-  console.log('get')
   $.ajax({
     url: '/getData1',
     type: "get",
@@ -44,7 +43,7 @@ Graph_Trigger.prototype.drowChart = function(data) {
     labels: this.view_s.room_name_list,
     datasets: [
       {
-        label: '最高気温(度）',
+        label: '平均気温(度）',
         data: data,
         backgroundColor: "rgb(0, 255, 0)"
       },
