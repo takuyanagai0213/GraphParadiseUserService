@@ -19,7 +19,19 @@ Graph_Trigger.prototype.createGraph = function() {
   }).then(this.createAreaSelectBox.bind(this));
   this.getDataTypeList();
   this.getDataByArea();
+  this.getDates();
+  this.getDataByRoom();
 
+}
+Graph_Trigger.prototype.getDates = function(areas) {
+  $.ajax({
+    url: '/getDates',
+    type: "get",
+    dataType: 'json',
+  }).then(this.putDates.bind(this));
+}
+Graph_Trigger.prototype.putDates = function(dates) {
+  this.view_s.dates = dates
 }
 Graph_Trigger.prototype.getDataTypeList = function(areas) {
   $.ajax({
@@ -58,6 +70,13 @@ Graph_Trigger.prototype.getDataByArea = function() {
     type: "get",
     dataType: 'json',
   }).then(this.drowChart.bind(this));
+}
+Graph_Trigger.prototype.getDataByRoom = function() {
+  $.ajax({
+    url: '/getData1',
+    type: "get",
+    dataType: 'json',
+  }).then(this.drowLineChart.bind(this));
 }
 
 Graph_Trigger.prototype.drowChart = function(data) {
@@ -101,16 +120,16 @@ Graph_Trigger.prototype.formatRoomData = function(rooms) {
   }
 
 }
-Graph_Trigger.prototype.drowLineChart = function() {
-  var ctx = document.getElementById(target);
+Graph_Trigger.prototype.drowLineChart = function(room_data) {
+  var ctx = document.getElementById('myChart2');
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-    labels: dates,
+    labels: this.view_s.dates,
     datasets: [
       {
         label: '最高気温(度）',
-        data: json,
+        data: room_data,
         backgroundColor: "rgb(255, 100, 0)"
       },
     ],
