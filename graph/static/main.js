@@ -21,7 +21,6 @@ Graph_Trigger.prototype.createGraph = function() {
   this.getDataByArea();
   this.getDates();
   this.getDataByRoom();
-
 }
 Graph_Trigger.prototype.getDates = function(areas) {
   $.ajax({
