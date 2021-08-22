@@ -14,6 +14,20 @@ type Room struct {
 	room_name string
 }
 
+func GetAreas(w http.ResponseWriter, r *http.Request) {
+	var area_info []interface{}
+
+	var buf map[string]interface{}
+	for i := 1; i < 5; i++ {
+		buf = map[string]interface{}{}
+		buf["area_name"] = "エリア" + strconv.Itoa(i)
+		buf["area_no"] = strconv.Itoa(i)
+		area_info = append(area_info, buf)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(area_info)
+}
 func GetRooms(w http.ResponseWriter, r *http.Request) {
 	var data []interface{}
 
