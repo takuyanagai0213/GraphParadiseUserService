@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"./database"
+	"./../database"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
