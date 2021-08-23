@@ -3,8 +3,9 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"graph_paradise/database"
 	"net/http"
+
+	"./database"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
