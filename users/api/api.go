@@ -15,9 +15,10 @@ type User struct {
 	gorm.Model
 	Name     string
 	Password string
+	Area     string
 }
 
-func New(w http.ResponseWriter, r *http.Request) {
+func NewUsers(w http.ResponseWriter, r *http.Request) {
 	var name string = r.FormValue("name")
 	var password string = r.FormValue("password")
 
@@ -35,10 +36,9 @@ func New(w http.ResponseWriter, r *http.Request) {
 	db.Create(&User{Name: name, Password: string(hashed_password)})
 	// defer db.Close()
 }
-func Get(w http.ResponseWriter, r *http.Request) {
+func GetUsers(w http.ResponseWriter, r *http.Request) {
 	db := database.DBConnect()
 
-	// fmt.Println("create user " + name + " with email " + email)
 	var users []User
 	db.Find(&users)
 
