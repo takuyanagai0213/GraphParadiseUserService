@@ -1,23 +1,5 @@
 version: '3'
 services:
-  go:
-    build:
-      context: ./auth
-      dockerfile: ./dev/Dockerfile
-    volumes: 
-      - ./auth:/app/go
-    ports:
-      - 80:80
-    tty: true
-  graph:
-    build:
-      context: ./graph
-      dockerfile: ./dev/Dockerfile
-    volumes: 
-      - ./graph:/app/go
-    ports:
-      - 90:80
-    tty: true
   users:
     build:
       context: ./users
