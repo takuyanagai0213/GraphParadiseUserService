@@ -24,6 +24,9 @@ func NewUser(w http.ResponseWriter, r *http.Request) {
 	var password string = r.FormValue("password")
 
 	if name == "" || password == "" {
+		var message string = "ユーザを作成できませんでした"
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(message)
 		fmt.Println("Empty user or Empty password")
 		return
 	}
