@@ -34,7 +34,10 @@ func NewUsers(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("create user " + name + " with password " + string(hashed_password))
 	db.Create(&User{Name: name, Password: string(hashed_password)})
-	// defer db.Close()
+
+	var message string = "ユーザを作成しました"
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(message)
 }
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 	db := database.DBConnect()

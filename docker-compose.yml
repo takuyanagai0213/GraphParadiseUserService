@@ -5,7 +5,7 @@ services:
       context: ./users
       dockerfile: ./dev/Dockerfile
     volumes: 
-      - ./graph:/app/go
+      - ./users:/app/go
     ports:
       - 90:80
     tty: true
