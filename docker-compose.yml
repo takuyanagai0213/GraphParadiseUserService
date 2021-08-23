@@ -12,7 +12,6 @@ services:
     depends_on: 
       - mysql
   mysql:
-      build: ./dev/db
       image: mysql:5.7
       # restart: always
       environment:
@@ -23,8 +22,8 @@ services:
         - "3306:3306"
       command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
       volumes:
-        - ./dev/db/conf.d:/etc/mysql/conf.d
-        - ./dev/db/log/mysql:/var/log/mysql
+        - ./users/dev/db/conf.d:/etc/mysql/conf.d
+        - ./users/dev/db/log/mysql:/var/log/mysql
 # volumes:
 #   db-data:
 #     driver: local
