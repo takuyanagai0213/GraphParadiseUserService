@@ -1,5 +1,5 @@
 FROM golang:alpine
-COPY . /app/go
+COPY ./../ /app/go
 WORKDIR /app/go
 
 EXPOSE 80
