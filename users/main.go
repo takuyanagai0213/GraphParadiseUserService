@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"./api"
+	"github.com/takuyanagai0213/GraphParadiseUserService/api"
 )
 
 func main() {

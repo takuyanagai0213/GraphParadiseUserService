@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"./../database"
+	"github.com/takuyanagai0213/GraphParadiseUserService/database"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -19,7 +19,7 @@ type User struct {
 	Area     string
 }
 
-func NewUsers(w http.ResponseWriter, r *http.Request) {
+func NewUser(w http.ResponseWriter, r *http.Request) {
 	var name string = r.FormValue("name")
 	var password string = r.FormValue("password")
 
