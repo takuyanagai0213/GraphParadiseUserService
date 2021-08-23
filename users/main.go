@@ -1,10 +1,11 @@
 package main
 
 import (
-	"api"
 	"html/template"
 	"net/http"
 	"os"
+
+	"github.com/takuyanagai0213/GraphParadiseUserService/users/api"
 )
 
 func main() {
