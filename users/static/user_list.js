@@ -7,16 +7,16 @@ User.prototype.def_s = new Object({
   room_name_list: []
 });
 User.prototype.init = function() {
-  $('#submit').on('click', this.createUser.bind(this))
+  this.showUser();
 }
-User.prototype.createUser = function() {
+User.prototype.showUser = function() {
   $('input[name="password"]')
   const post_data = {
     name: $('input[name="name"]').val(),
     password: $('input[name="password"]').val(),
   }
   $.ajax({
-    url: '/user/new',
+    url: '/user/get',
     type: "get",
     data: post_data,
     dataType: 'json',
