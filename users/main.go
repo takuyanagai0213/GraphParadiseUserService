@@ -6,10 +6,16 @@ import (
 	"os"
 
 	"github.com/takuyanagai0213/GraphParadiseUserService/api"
+	"github.com/takuyanagai0213/GraphParadiseUserService/database"
+	"github.com/takuyanagai0213/GraphParadiseUserService/persistence"
 )
 
 func main() {
 	dir, _ := os.Getwd()
+	// 依存関係を注入
+	itemPersistence := persistence.NewUserPersistence(database.DBConnect())
+	itemUseCase := usecase.NewUserUseCase(userPersistence)
+	userHandler := handler.NewUserandler(userUseCase)
 
 	http.HandleFunc("/users", users)
 	http.HandleFunc("/users/all", user_list)
