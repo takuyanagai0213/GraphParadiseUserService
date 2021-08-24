@@ -10,9 +10,15 @@ User.prototype.init = function() {
   $('#submit').on('click', this.createUser.bind(this))
 }
 User.prototype.createUser = function() {
+  $('input[name="password"]')
+  const post_data = {
+    name: $('input[name="name"]').val(),
+    password: $('input[name="password"]').val(),
+  }
   $.ajax({
     url: '/user/new',
     type: "get",
+    data: post_data,
     dataType: 'json',
   }).then(this.responseData.bind(this));
 }
