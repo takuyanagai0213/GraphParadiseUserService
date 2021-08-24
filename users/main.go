@@ -7,19 +7,22 @@ import (
 
 	"github.com/takuyanagai0213/GraphParadiseUserService/api"
 	"github.com/takuyanagai0213/GraphParadiseUserService/database"
-	"github.com/takuyanagai0213/GraphParadiseUserService/persistence"
+	"github.com/takuyanagai0213/GraphParadiseUserService/infrastructure/persistence"
+	handler "github.com/takuyanagai0213/GraphParadiseUserService/interfaces/handler"
+	"github.com/takuyanagai0213/GraphParadiseUserService/usecase"
 )
 
 func main() {
 	dir, _ := os.Getwd()
 	// 依存関係を注入
 	userPersistence := persistence.NewUserPersistence(database.DBConnect())
-	itemUseCase := usecase.NewUserUseCase(userPersistence)
+	userUseCase := usecase.NewUserUseCase(userPersistence)
 	userHandler := handler.NewUserandler(userUseCase)
 
 	http.HandleFunc("/users", users)
 	http.HandleFunc("/users/all", user_list)
 	http.HandleFunc("/user/new", api.CreateUser)
+	http.HandleFunc("/api/users", userHandler.Index)
 	http.HandleFunc("/user/get", api.GetUsers)
 	http.HandleFunc("/user/update", api.UpdateUsers)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(dir+"/static/"))))

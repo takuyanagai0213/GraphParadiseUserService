@@ -1,10 +1,9 @@
 package persistence
 
 import (
-	"github.com/jinzhu/gorm"
-
 	"github.com/takuyanagai0213/GraphParadiseUserService/domain/model"
 	"github.com/takuyanagai0213/GraphParadiseUserService/domain/repository"
+	"gorm.io/gorm"
 )
 
 // UserにおけるPersistenceのインターフェース
