@@ -4,27 +4,34 @@ function User() {
 }
 User.prototype.def_s = new Object({
   rooms: {},
-  room_name_list: []
+  room_name_list: [],
+  users: []
 });
 User.prototype.init = function() {
   this.showUser();
 }
 User.prototype.showUser = function() {
-  $('input[name="password"]')
-  const post_data = {
-    name: $('input[name="name"]').val(),
-    password: $('input[name="password"]').val(),
-  }
   $.ajax({
     url: '/user/get',
     type: "get",
-    data: post_data,
     dataType: 'json',
   }).then(this.responseData.bind(this));
 }
-User.prototype.responseData = function(message) {
-  console.log(message)
+User.prototype.responseData = function(users) {
+  this.view_s.users = users;
+  this.createUserList();
 }
+User.prototype.createUserList = function(message) {
+  for( let key in this.view_s.users){
+    $('#user_list').append(
+      '<ol>'
+      + '<li>' + this.view_s.users[key]['ID'] + '</li>'
+      + '<li>' + this.view_s.users[key]['Name'] + '</li>'
+      + '</ol>'
+      );
+  }
+};
+  
 const userClass = new User();
 
 userClass.init()
