@@ -9,10 +9,18 @@ User.prototype.def_s = new Object({
 });
 User.prototype.init = function() {
   this.showUser();
+  $('#submit').on('click', this.updateUsers.bind(this))
 }
 User.prototype.showUser = function() {
   $.ajax({
     url: '/user/get',
+    type: "get",
+    dataType: 'json',
+  }).then(this.responseData.bind(this));
+}
+User.prototype.updateUsers = function() {
+  $.ajax({
+    url: '/user/update',
     type: "get",
     dataType: 'json',
   }).then(this.responseData.bind(this));

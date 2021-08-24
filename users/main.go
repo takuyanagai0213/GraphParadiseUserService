@@ -15,6 +15,7 @@ func main() {
 	http.HandleFunc("/users/all", user_list)
 	http.HandleFunc("/user/new", api.CreateUser)
 	http.HandleFunc("/user/get", api.GetUsers)
+	http.HandleFunc("/user/update", api.UpdateUsers)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(dir+"/static/"))))
 	// port
 	http.ListenAndServe(":80", nil)

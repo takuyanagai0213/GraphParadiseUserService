@@ -52,3 +52,16 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(users)
 }
+
+// func UpdateUsers(w http.ResponseWriter, r *http.Request) {
+// 	db := database.DBConnect()
+
+// 	var user []User
+// 	db.First(&user)
+// 	fmt.Println(&user)
+// 	user.Name = "jinzhu 2"
+// 	db.Save(&user)
+// 	var message string = "更新しました"
+// 	w.Header().Set("Content-Type", "application/json")
+// 	json.NewEncoder(w).Encode(users)
+// }
