@@ -24,10 +24,10 @@ User.prototype.responseData = function(users) {
 User.prototype.createUserList = function(message) {
   for( let key in this.view_s.users){
     $('#user_list').append(
-      '<ol>'
+      '<ul>'
       + '<li>' + this.view_s.users[key]['ID'] + '</li>'
-      + '<li>' + this.view_s.users[key]['Name'] + '</li>'
-      + '</ol>'
+      + '<li><input class="input" type="text" name="name" value=' + this.view_s.users[key]['Name'] + '></li>'
+      + '</ul>'
       );
   }
 };
