@@ -29,7 +29,7 @@ func (uh userHandler) Index(w http.ResponseWriter, r *http.Request, pr httproute
 	// GETパラメータ
 	name := r.FormValue("name")
 
-	user, err := jh.userUseCase.Search(name)
+	user, err := uh.userUseCase.Search(name)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return

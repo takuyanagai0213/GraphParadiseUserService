@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"github.com/takuyanagai0213/GraphParadiseUserService/domain/model"
 	"github.com/takuyanagai0213/GraphParadiseUserService/domain/repository"
 )
 

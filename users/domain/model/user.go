@@ -1,11 +1,7 @@
 package model
 
-import (
-	"gorm.io/gorm"
-)
-
 type User struct {
-	gorm.Model
+	// gorm.Model
 	Name     string
 	Password string
 	Area     string
