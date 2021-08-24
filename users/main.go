@@ -12,7 +12,7 @@ func main() {
 	dir, _ := os.Getwd()
 
 	http.HandleFunc("/users", users)
-	http.HandleFunc("/user/new", api.createUser)
+	http.HandleFunc("/user/new", api.CreateUser)
 	http.HandleFunc("/user/get", api.GetUsers)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(dir+"/static/"))))
 	// port

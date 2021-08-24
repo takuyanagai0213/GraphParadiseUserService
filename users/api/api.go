@@ -19,7 +19,7 @@ type User struct {
 	Area     string
 }
 
-func createUser(w http.ResponseWriter, r *http.Request) {
+func CreateUser(w http.ResponseWriter, r *http.Request) {
 	var name string = r.FormValue("name")
 	var password string = r.FormValue("password")
 
