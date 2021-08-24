@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"github.com/sample/sample-api/domain/repository"
+	"github.com/takuyanagai0213/GraphParadiseUserService/domain/repository"
 )
 
 // UserにおけるUseCaseのインターフェース

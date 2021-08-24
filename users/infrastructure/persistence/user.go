@@ -3,8 +3,8 @@ package persistence
 import (
 	"github.com/jinzhu/gorm"
 
-	"github.com/sample/sample-api/domain/model"
-	"github.com/sample/sample-api/domain/repository"
+	"github.com/takuyanagai0213/GraphParadiseUserService/domain/model"
+	"github.com/takuyanagai0213/GraphParadiseUserService/domain/repository"
 )
 
 // UserにおけるPersistenceのインターフェース

@@ -13,7 +13,7 @@ import (
 func main() {
 	dir, _ := os.Getwd()
 	// 依存関係を注入
-	itemPersistence := persistence.NewUserPersistence(database.DBConnect())
+	userPersistence := persistence.NewUserPersistence(database.DBConnect())
 	itemUseCase := usecase.NewUserUseCase(userPersistence)
 	userHandler := handler.NewUserandler(userUseCase)
 
