@@ -20,7 +20,7 @@ func main() {
 }
 
 func users(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("index.html")
+	t, err := template.ParseFiles("users.html")
 	if err != nil {
 		panic(err.Error())
 	}
