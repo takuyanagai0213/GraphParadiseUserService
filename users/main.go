@@ -26,7 +26,7 @@ func main() {
 	fmt.Println("========================")
 	fmt.Println("Server Start >> http://localhost:3000")
 	fmt.Println("========================")
-	log.Fatal(http.ListenAndServe(":3000", router))
+	log.Fatal(http.ListenAndServe(":80", router))
 
 	// http.HandleFunc("/users", users)
 	// http.HandleFunc("/users/all", user_list)
