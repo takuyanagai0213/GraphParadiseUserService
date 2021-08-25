@@ -1,9 +1,12 @@
 package repository
 
-import (
-	"github.com/takuyanagai0213/GraphParadiseUserService/domain/model"
-)
+type User struct {
+	// gorm.Model
+	Name     string
+	Password string
+	Area     string
+}
 
 type UserRepository interface {
-	Search(name string) ([]*model.User, error)
+	Search(name string) ([]*User, error)
 }

@@ -15,7 +15,7 @@ import (
 func main() {
 	dir, _ := os.Getwd()
 	// 依存関係を定義
-	userPersistence := persistence.NewUserPersistence(database.Connect())
+	userPersistence := persistence.NewUserPersistence(database.DBConnect())
 	userUseCase := usecase.NewUserUseCase(userPersistence)
 	userHandler := handler.NewUserHandler(userUseCase)
 	// ルーティングの設定
