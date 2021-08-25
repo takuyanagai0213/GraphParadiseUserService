@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/rs/cors"
 	"github.com/takuyanagai0213/GraphParadiseUserService/database"
 	"github.com/takuyanagai0213/GraphParadiseUserService/infrastructure/persistence"
 	handler "github.com/takuyanagai0213/GraphParadiseUserService/interfaces/handler"
@@ -34,5 +35,7 @@ func main() {
 	fmt.Println("========================")
 	fmt.Println("Server Start >> http://localhost:80")
 	fmt.Println("========================")
-	http.ListenAndServe(":80", router)
+	// CORS対策
+	handler := cors.Default().Handler(router)
+	http.ListenAndServe(":80", handler)
 }
