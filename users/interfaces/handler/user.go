@@ -9,16 +9,16 @@ import (
 )
 
 // userにおけるHandlerのインターフェース
-type userHandler interface {
+type UserHandler interface {
 	Index(http.ResponseWriter, *http.Request, httprouter.Params)
 }
 
-// type userHandler struct {
-// 	userUseCase usecase.UserUseCase
-// }
+type userHandler struct {
+	userUseCase usecase.UserUseCase
+}
 
 // Userデータに関するHandlerを生成
-func NewUserHandler(uu usecase.UserUseCase) userHandler {
+func NewUserHandler(uu usecase.UserUseCase) UserHandler {
 	return &userHandler{
 		userUseCase: uu,
 	}
