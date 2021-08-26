@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/julienschmidt/httprouter"
+
 	"github.com/takuyanagai0213/GraphParadiseUserService/database"
 
 	"golang.org/x/crypto/bcrypt"
@@ -19,8 +21,8 @@ type User struct {
 	Area     string
 }
 
-func CreateUser(w http.ResponseWriter, r *http.Request) {
-	var name string = r.FormValue("name")
+func CreateUser(w http.ResponseWriter, r *http.Request, pr httprouter.Params) {
+	var name string r.FormValue("name")
 	var password string = r.FormValue("password")
 
 	if name == "" || password == "" {

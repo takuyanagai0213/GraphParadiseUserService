@@ -6,6 +6,7 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/rs/cors"
+	"github.com/takuyanagai0213/GraphParadiseUserService/api"
 	"github.com/takuyanagai0213/GraphParadiseUserService/database"
 	"github.com/takuyanagai0213/GraphParadiseUserService/infrastructure/persistence"
 	handler "github.com/takuyanagai0213/GraphParadiseUserService/interfaces/handler"
@@ -21,6 +22,7 @@ func main() {
 	// ルーティングの設定
 	router := httprouter.New()
 	router.GET("/api/users", userHandler.Index)
+	router.GET("/user/new", api.CreateUser)
 
 	// サーバ起動
 	// fmt.Println("========================")
