@@ -5,16 +5,17 @@ package user;
 option go_package = "/;user";
 
 message User {
-  string user_name = 2;
-  string password = 3;
+  string Name = 2;
+  string Password = 3;
+  string Area = 4;
 }
 message ListUserRequest {
 }
 
 message ListUserResponse {
-  repeated User profile=1;
+  string Name = 1;
 }
 
 service UserService {
-  rpc ListUser(ListUserRequest) returns (ListUserResponse);
+  rpc Search(ListUserRequest) returns (ListUserResponse);
 }

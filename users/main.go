@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
@@ -12,10 +13,12 @@ import (
 	"github.com/rs/cors"
 	"github.com/takuyanagai0213/GraphParadiseUserService/api"
 	"github.com/takuyanagai0213/GraphParadiseUserService/database"
+	"github.com/takuyanagai0213/GraphParadiseUserService/domain/repository"
 	"github.com/takuyanagai0213/GraphParadiseUserService/grpc/user"
 	"github.com/takuyanagai0213/GraphParadiseUserService/infrastructure/persistence"
 	handler "github.com/takuyanagai0213/GraphParadiseUserService/interfaces/handler"
 	"github.com/takuyanagai0213/GraphParadiseUserService/usecase"
+
 	"google.golang.org/grpc"
 )
 
@@ -43,7 +46,7 @@ func main() {
 	opts := []grpc.ServerOption{}
 	s := grpc.NewServer(opts...)
 
-	user.RegisterGweetServiceServer(s, &server{})
+	user.RegisterUserServiceServer(s, &server{})
 	go func() {
 		fmt.Println("Starting server ....")
 		if err := s.Serve(lis); err != nil {
@@ -76,4 +79,27 @@ func main() {
 	// CORS対策
 	handler := cors.Default().Handler(router)
 	http.ListenAndServe(":80", handler)
+}
+
+// 検索
+func (*server) Search(context.Context, *user.ListUserRequest) (*user.ListUserResponse, error) {
+	var user_list []*repository.User
+
+	// DB接続確認
+	db_conn := database.DBConnect()
+	if err := db_conn.Take(&user_list).Error; err != nil {
+		return nil, err
+	}
+
+	db_conn.Find(&user_list)
+
+	// 名前検索
+	// if name != "" {
+	// 	db = db.Where("name = ?", name).Find(&user)
+	// }
+
+	return &user.ListUserResponse{
+		Name: "takuya",
+		// Profile: user_list,
+	}, nil
 }
