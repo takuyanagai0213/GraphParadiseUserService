@@ -22,7 +22,7 @@ type User struct {
 }
 
 func CreateUser(w http.ResponseWriter, r *http.Request, pr httprouter.Params) {
-	var name string r.FormValue("name")
+	var name string = r.FormValue("name")
 	var password string = r.FormValue("password")
 
 	if name == "" || password == "" {
