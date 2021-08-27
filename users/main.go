@@ -1,9 +1,9 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -12,9 +12,11 @@ import (
 	"github.com/rs/cors"
 	"github.com/takuyanagai0213/GraphParadiseUserService/api"
 	"github.com/takuyanagai0213/GraphParadiseUserService/database"
+	"github.com/takuyanagai0213/GraphParadiseUserService/grpc/user"
 	"github.com/takuyanagai0213/GraphParadiseUserService/infrastructure/persistence"
 	handler "github.com/takuyanagai0213/GraphParadiseUserService/interfaces/handler"
 	"github.com/takuyanagai0213/GraphParadiseUserService/usecase"
+	"google.golang.org/grpc"
 )
 
 type server struct {
@@ -31,11 +33,17 @@ func main() {
 	router.GET("/api/users", userHandler.Index)
 	router.GET("/user/new", api.CreateUser)
 
+	fmt.Println("Blog Service Started")
+	lis, err := net.Listen("tcp", "0.0.0.0:50051")
+	if err != nil {
+		log.Fatalf("Failed to listen: %v", err)
+	}
+
 	// grpc
 	opts := []grpc.ServerOption{}
 	s := grpc.NewServer(opts...)
 
-	gwitterpb.RegisterGweetServiceServer(s, &server{})
+	user.RegisterGweetServiceServer(s, &server{})
 	go func() {
 		fmt.Println("Starting server ....")
 		if err := s.Serve(lis); err != nil {
@@ -51,8 +59,6 @@ func main() {
 	s.Stop()
 	fmt.Println("Close the listener")
 	lis.Close()
-	fmt.Println("Closeing connection")
-	client.Disconnect(context.TODO())
 	fmt.Println("end of program")
 	// サーバ起動
 	// fmt.Println("========================")
