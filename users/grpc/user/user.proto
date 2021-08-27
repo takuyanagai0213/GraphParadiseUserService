@@ -5,23 +5,14 @@ package user;
 option go_package = "/;user";
 
 message User {
-  uint32 user_id = 1;
   string user_name = 2;
   string password = 3;
-  string profile_text = 4;
-  string email = 5;
-  uint32 authority = 6;
-}
-
-message UserProfile {
-  uint32 user_id = 1;
-  string user_name = 2;
 }
 message ListUserRequest {
 }
 
 message ListUserResponse {
-  repeated UserProfile profile=1;
+  repeated User profile=1;
 }
 
 service UserService {
