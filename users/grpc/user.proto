@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+message User {
+  uint32 user_id = 1;
+  string user_name = 2;
+  string password = 3;
+  string profile_text = 4;
+  string email = 5;
+  uint32 authority = 6;
+}
+
+message UserProfile {
+  uint32 user_id = 1;
+  string user_name = 2;
+  string profile_text = 3;
+  uint32 authority = 4;
+  repeated uint32 follow_users=5;
+}
+message ListUserRequest {
+}
+
+message ListUserResponse {
+  repeated UserProfile profile=1;
+}
+
+service UserService {
+  rpc ListUser(ListUserRequest) returns (ListUserResponse);
+}
