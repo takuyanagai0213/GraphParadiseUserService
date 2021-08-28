@@ -5,19 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"net/http"
 	"os"
 	"os/signal"
 
-	"github.com/julienschmidt/httprouter"
-	"github.com/rs/cors"
-	"github.com/takuyanagai0213/GraphParadiseUserService/api"
 	"github.com/takuyanagai0213/GraphParadiseUserService/database"
 	"github.com/takuyanagai0213/GraphParadiseUserService/domain/repository"
 	"github.com/takuyanagai0213/GraphParadiseUserService/grpc/user"
-	"github.com/takuyanagai0213/GraphParadiseUserService/infrastructure/persistence"
-	handler "github.com/takuyanagai0213/GraphParadiseUserService/interfaces/handler"
-	"github.com/takuyanagai0213/GraphParadiseUserService/usecase"
 
 	"google.golang.org/grpc"
 )
@@ -28,13 +21,13 @@ type server struct {
 func main() {
 	// dir, _ := os.Getwd()
 	// 依存関係を定義
-	userPersistence := persistence.NewUserPersistence(database.DBConnect())
-	userUseCase := usecase.NewUserUseCase(userPersistence)
-	userHandler := handler.NewUserHandler(userUseCase)
-	// ルーティングの設定
-	router := httprouter.New()
-	router.GET("/api/users", userHandler.Index)
-	router.GET("/user/new", api.CreateUser)
+	// userPersistence := persistence.NewUserPersistence(database.DBConnect())
+	// userUseCase := usecase.NewUserUseCase(userPersistence)
+	// userHandler := handler.NewUserHandler(userUseCase)
+	// // ルーティングの設定
+	// router := httprouter.New()
+	// router.GET("/api/users", userHandler.Index)
+	// router.GET("/user/new", api.CreateUser)
 
 	fmt.Println("Blog Service Started")
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
@@ -73,12 +66,12 @@ func main() {
 	// http.Handle("/user/get", new(userHandler.Index))
 	// http.HandleFunc("/user/update", api.UpdateUsers)
 	// port
-	fmt.Println("========================")
-	fmt.Println("Server Start >> http://localhost:80")
-	fmt.Println("========================")
+	// fmt.Println("========================")
+	// fmt.Println("Server Start >> http://localhost:80")
+	// fmt.Println("========================")
 	// CORS対策
-	handler := cors.Default().Handler(router)
-	http.ListenAndServe(":80", handler)
+	// handler := cors.Default().Handler(router)
+	// http.ListenAndServe(":80", handler)
 }
 
 // 検索
@@ -99,7 +92,7 @@ func (*server) Search(context.Context, *user.ListUserRequest) (*user.ListUserRes
 	// }
 
 	return &user.ListUserResponse{
-		Name: "takuya",
+		Name: "名前",
 		// Profile: user_list,
 	}, nil
 }
