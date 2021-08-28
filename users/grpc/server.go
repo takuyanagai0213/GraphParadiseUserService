@@ -67,7 +67,6 @@ func (*server) Search(context.Context, *user.ListUserRequest) (*user.ListUserRes
 	// }
 
 	return &user.ListUserResponse{
-		Name: "名前",
 		// Profile: user_list,
 	}, nil
 }

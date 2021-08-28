@@ -13,7 +13,6 @@ message ListUserRequest {
 }
 
 message ListUserResponse {
-  string Name = 1;
 }
 
 service UserService {
