@@ -9,7 +9,7 @@ import (
 	"os/signal"
 
 	"github.com/takuyanagai0213/GraphParadiseUserService/domain/model"
-	"github.com/takuyanagai0213/GraphParadiseUserService/grpc/user"
+	"github.com/takuyanagai0213/GraphParadiseUserService/grpc/userservice"
 	"github.com/takuyanagai0213/GraphParadiseUserService/usecase"
 	"google.golang.org/grpc"
 )
@@ -30,7 +30,7 @@ func NewUserGrpcServer() {
 	opts := []grpc.ServerOption{}
 	s := grpc.NewServer(opts...)
 
-	user.RegisterUserServiceServer(s, &server{})
+	userservice.RegisterUserServiceServer(s, &server{})
 	go func() {
 		fmt.Println("Starting server ....")
 		if err := s.Serve(lis); err != nil {
@@ -48,7 +48,7 @@ func NewUserGrpcServer() {
 	lis.Close()
 	fmt.Println("end of program")
 }
-func (s server) ReadUser(ctx context.Context, req *user.ReadUserRequest) (*user.ReadUserResponse, error) {
+func (s server) ReadUser(ctx context.Context, req *userservice.ReadUserRequest) (*userservice.ReadUserResponse, error) {
 	name := req.GetName()
 	fmt.Println(name)
 	user_data, err := s.Usecase.GetUserByName(name)
@@ -57,12 +57,12 @@ func (s server) ReadUser(ctx context.Context, req *user.ReadUserRequest) (*user.
 		return nil, err
 	}
 	user_data_comp := makeGrpcUserProfile(&user_data)
-	return &user.ReadUserResponse{
+	return &userservice.ReadUserResponse{
 		User: user_data_comp,
 	}, nil
 }
-func makeGrpcUserProfile(user_data *model.User) *user.User {
-	gUser := &user.User{
+func makeGrpcUserProfile(user_data *model.User) *userservice.User {
+	gUser := &userservice.User{
 		Name:     user_data.Name,
 		Password: user_data.Password,
 		Area:     "a",
