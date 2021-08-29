@@ -33,3 +33,14 @@ func (up *userPersistence) Search(name string) ([]*repository.User, error) {
 
 	return user, nil
 }
+
+// GetUserByName Nameを元にユーザを1件取得する
+func (up *userPersistence) GetUserByName(name string) ([]*repository.User, error) {
+	var user *repository.User
+
+	db := up.Conn.Find(&user)
+
+	db := db.Where("name = ?", name).First(&user)
+
+	return user, nil
+}

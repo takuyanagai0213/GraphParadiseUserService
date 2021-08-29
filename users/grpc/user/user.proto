@@ -21,7 +21,7 @@ message ListUserRequest {
 }
 
 message ListUserResponse {
-  repeated User users = 1;
+  string Name = 1;
 }
 
 service UserService {

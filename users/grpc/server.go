@@ -9,12 +9,12 @@ import (
 	"os/signal"
 
 	"github.com/takuyanagai0213/GraphParadiseUserService/grpc/user"
+	"github.com/takuyanagai0213/GraphParadiseUserService/usecase"
 	"google.golang.org/grpc"
-
-	"github.com/takuyanagai0213/GraphParadiseUserService/database"
 )
 
 type server struct {
+	Usecase usecase.UserUseCase
 }
 
 func NewUserGrpcServer() {
@@ -47,41 +47,20 @@ func NewUserGrpcServer() {
 	lis.Close()
 	fmt.Println("end of program")
 }
-
-// 検索
-func (*server) Search(context.Context, *user.ListUserRequest) (*user.ListUserResponse, error) {
-	// var user_list []*repository.User
-	var user_list interface{}
-
-	// DB接続確認
-	db_conn := database.DBConnect()
-	if err := db_conn.Take(&user_list).Error; err != nil {
-		return nil, err
-	}
-
-	db_conn.Find(&user_list)
-
-	// 名前検索
-	// if name != "" {
-	// 	db = db.Where("name = ?", name).Find(&user)
-	// }
-	var user_data interface{}
-	return &user.ListUserResponse{
-		User: &user_list,
-	}, nil
-}
-
-func (s server) ReadUser(ctx context.Context, req *userservice.ReadUserRequest) (*userservice.ReadUserResponse, error) {
-	userID := req.GetUserId()
-	row, err := s.Usecase.GetUserByUserID(userID)
-	followUsers := s.Usecase.GetFollowUsersByID(userID)
+func (s server) ReadUser(ctx context.Context, req *user.ReadUserRequest) (*user.ReadUserResponse, error) {
+	userID := req.GetName()
+	user_data, err := s.Usecase.GetUserByName(userID)
 
 	if err != nil {
 		return nil, err
 	}
-	user := makeGrpcUserProfile(&row, followUsers)
-	res := &userservice.ReadUserResponse{
-		Profile: user,
-	}
-	return res, nil
+	fmt.Println(user_data)
+	// var data net.Interface
+	return &user.ReadUserResponse{
+		User: &user.User{
+			Name:     "永井",
+			Password: "aaaaaaa",
+			Area:     "a",
+		},
+	}, nil
 }

@@ -6,7 +6,7 @@ import (
 
 // UserにおけるUseCaseのインターフェース
 type UserUseCase interface {
-	Search(name string) ([]*repository.User, error)
+	GetUserByName(name string) ([]*repository.User, error)
 }
 
 type userUseCase struct {
@@ -20,9 +20,10 @@ func NewUserUseCase(ur repository.UserRepository) UserUseCase {
 	}
 }
 
-// 検索
-func (uu userUseCase) Search(name string) (user []*repository.User, err error) {
-	user, err = uu.userRepository.Search(name)
+// GetUserByName Nameを元にユーザを1件取得する
+func (uu userUseCase) GetUserByName(name string) (user []*repository.User, err error) {
+	user, err = uu.userRepository.GetUserByName(name)
+
 	if err != nil {
 		return nil, err
 	}

@@ -9,4 +9,5 @@ type User struct {
 
 type UserRepository interface {
 	Search(name string) ([]*User, error)
+	GetUserByName(name string) ([]*User, error)
 }
