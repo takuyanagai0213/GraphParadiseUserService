@@ -70,7 +70,7 @@ func makeGrpcUserProfile(user_data *model.User) *userservice.User {
 	return gUser
 }
 func (s server) ListUser(ctx context.Context, req *userservice.ListUserRequest) (*userservice.ListUserResponse, error) {
-	rows, err := s.Usecase.ListAllNormalUser()
+	rows, err := s.Usecase.List()
 	if err != nil {
 		return nil, err
 	}
