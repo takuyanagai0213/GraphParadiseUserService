@@ -1,4 +1,4 @@
-package rest
+package handler
 
 import (
 	"encoding/json"
@@ -11,6 +11,7 @@ import (
 // userにおけるHandlerのインターフェース
 type UserHandler interface {
 	Index(http.ResponseWriter, *http.Request, httprouter.Params)
+	CreateUser(http.ResponseWriter, *http.Request, httprouter.Params)
 }
 
 type userHandler struct {
@@ -26,10 +27,7 @@ func NewUserHandler(uu usecase.UserUseCase) UserHandler {
 
 // UserIndex : GET /users -> 検索結果を返す
 func (uh userHandler) Index(w http.ResponseWriter, r *http.Request, pr httprouter.Params) {
-	// GETパラメータ
-	name := r.FormValue("name")
-
-	user, err := uh.userUseCase.Search(name)
+	user, err := uh.userUseCase.List()
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -37,6 +35,19 @@ func (uh userHandler) Index(w http.ResponseWriter, r *http.Request, pr httproute
 
 	// クライアントにレスポンスを返却
 	if err = json.NewEncoder(w).Encode(user); err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+}
+func (uh userHandler) CreateUser(w http.ResponseWriter, r *http.Request, pr httprouter.Params) {
+	// GETパラメータ
+	var name string = r.FormValue("name")
+	var password string = r.FormValue("password")
+
+	result := uh.userUseCase.CreateUser(name, password)
+
+	// クライアントにレスポンスを返却
+	if err := json.NewEncoder(w).Encode(result); err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
