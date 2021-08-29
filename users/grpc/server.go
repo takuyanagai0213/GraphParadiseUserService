@@ -69,3 +69,19 @@ func makeGrpcUserProfile(user_data *model.User) *userservice.User {
 	}
 	return gUser
 }
+func (s server) ListUser(ctx context.Context, req *userservice.ListUserRequest) (*userservice.ListUserResponse, error) {
+	rows, err := s.Usecase.ListAllNormalUser()
+	if err != nil {
+		return nil, err
+	}
+	var users []*userservice.User
+	for _, user := range rows {
+		user := makeGrpcUserProfile(&user, []uint32{})
+		users = append(users, user)
+	}
+	res := &userservice.ListUserResponse{
+		User: users,
+	}
+
+	return res, nil
+}
