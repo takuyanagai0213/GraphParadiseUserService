@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/takuyanagai0213/GraphParadiseUserService/domain/model"
 	"github.com/takuyanagai0213/GraphParadiseUserService/grpc/user"
 	"github.com/takuyanagai0213/GraphParadiseUserService/usecase"
 	"google.golang.org/grpc"
@@ -48,19 +49,23 @@ func NewUserGrpcServer() {
 	fmt.Println("end of program")
 }
 func (s server) ReadUser(ctx context.Context, req *user.ReadUserRequest) (*user.ReadUserResponse, error) {
-	userID := req.GetName()
-	user_data, err := s.Usecase.GetUserByName(userID)
+	name := req.GetName()
+	fmt.Println(name)
+	user_data, err := s.Usecase.GetUserByName(name)
 
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(user_data)
-	// var data net.Interface
+	user_data_comp := makeGrpcUserProfile(&user_data)
 	return &user.ReadUserResponse{
-		User: &user.User{
-			Name:     "永井",
-			Password: "aaaaaaa",
-			Area:     "a",
-		},
+		User: user_data_comp,
 	}, nil
+}
+func makeGrpcUserProfile(user_data *model.User) *user.User {
+	gUser := &user.User{
+		Name:     user_data.Name,
+		Password: user_data.Password,
+		Area:     "a",
+	}
+	return gUser
 }

@@ -1,31 +1,19 @@
 package usecase
 
 import (
-	"github.com/takuyanagai0213/GraphParadiseUserService/domain/repository"
+	"github.com/takuyanagai0213/GraphParadiseUserService/database"
+	"github.com/takuyanagai0213/GraphParadiseUserService/domain/model"
 )
 
 // UserにおけるUseCaseのインターフェース
-type UserUseCase interface {
-	GetUserByName(name string) ([]*repository.User, error)
-}
-
-type userUseCase struct {
-	userRepository repository.UserRepository
-}
-
-// Userデータに関するUseCaseを生成
-func NewUserUseCase(ur repository.UserRepository) UserUseCase {
-	return &userUseCase{
-		userRepository: ur,
-	}
+type UserUseCase struct {
 }
 
 // GetUserByName Nameを元にユーザを1件取得する
-func (uu userUseCase) GetUserByName(name string) (user []*repository.User, err error) {
-	user, err = uu.userRepository.GetUserByName(name)
+func (uu *UserUseCase) GetUserByName(name string) (model.User, error) {
+	var user model.User
+	db := database.DBConnect()
+	db.Where("name = ?", name).First(&user)
 
-	if err != nil {
-		return nil, err
-	}
 	return user, nil
 }
