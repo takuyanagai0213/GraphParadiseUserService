@@ -76,7 +76,7 @@ func (s server) ListUser(ctx context.Context, req *userservice.ListUserRequest) 
 	}
 	var users []*userservice.User
 	for _, user := range rows {
-		user := makeGrpcUserProfile(&user, []uint32{})
+		user := makeGrpcUserProfile(&user)
 		users = append(users, user)
 	}
 	res := &userservice.ListUserResponse{
