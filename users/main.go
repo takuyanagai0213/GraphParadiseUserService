@@ -15,7 +15,7 @@ import (
 
 func main() {
 	// gRPCサーバーの起動
-	// grpc.NewUserGrpcServer()
+	grpc.NewUserGrpcServer()
 
 	// 依存関係を定義
 	userPersistence := persistence.NewUserPersistence(database.DBConnect())
