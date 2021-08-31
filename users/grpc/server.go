@@ -7,8 +7,8 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/yzmw1213/UserService/grpc/userservice"
-	"github.com/yzmw1213/UserService/usecase/interactor"
+	"github.com/takuyanagai0213/GraphParadiseUserService/grpc/userservice"
+	"github.com/takuyanagai0213/GraphParadiseUserService/usecase/interactor"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

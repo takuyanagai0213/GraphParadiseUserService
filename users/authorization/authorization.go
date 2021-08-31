@@ -7,7 +7,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	"github.com/pkg/errors"
-	"github.com/yzmw1213/UserService/domain/model"
+	"github.com/takuyanagai0213/GraphParadiseUserService/domain/model"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

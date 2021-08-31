@@ -74,7 +74,7 @@ func (s server) ListUser(ctx context.Context, req *userservice.ListUserRequest) 
 	}
 	var profiles []*userservice.UserProfile
 	for _, user := range rows {
-		user := makeGrpcUserProfile(&user, []uint32{})
+		user := makeGrpcUserProfile(&user)
 		profiles = append(profiles, user)
 	}
 	res := &userservice.ListUserResponse{
@@ -87,12 +87,12 @@ func (s server) ListUser(ctx context.Context, req *userservice.ListUserRequest) 
 func (s server) ReadUser(ctx context.Context, req *userservice.ReadUserRequest) (*userservice.ReadUserResponse, error) {
 	userID := req.GetUserId()
 	row, err := s.Usecase.GetUserByUserID(userID)
-	followUsers := s.Usecase.GetFollowUsersByID(userID)
+	// followUsers := s.Usecase.GetFollowUsersByID(userID)
 
 	if err != nil {
 		return nil, err
 	}
-	user := makeGrpcUserProfile(&row, followUsers)
+	user := makeGrpcUserProfile(&row)
 	res := &userservice.ReadUserResponse{
 		Profile: user,
 	}
@@ -149,13 +149,13 @@ func makeGrpcUser(user *model.User) *userservice.User {
 	return gUser
 }
 
-func makeGrpcUserProfile(user *model.User, followUsers []uint32) *userservice.UserProfile {
+func makeGrpcUserProfile(user *model.User) *userservice.UserProfile {
 	gUser := &userservice.UserProfile{
 		UserId:      user.ID,
 		UserName:    user.UserName,
 		ProfileText: user.ProfileText,
 		Authority:   user.Authority,
-		FollowUsers: followUsers,
+		// FollowUsers: followUsers,
 	}
 	return gUser
 }
@@ -228,31 +228,31 @@ func (s server) TokenAuth(ctx context.Context, req *userservice.TokenAuthRequest
 	}, nil
 }
 
-func (s server) FollowUser(ctx context.Context, req *userservice.FollowUserRequet) (*userservice.FollowUserResponse, error) {
-	relation := &model.Relation{
-		FollowerUserID: req.GetFollwerUserId(),
-		FollowedUserID: req.GetFollwedUserId(),
-	}
+// func (s server) FollowUser(ctx context.Context, req *userservice.FollowUserRequet) (*userservice.FollowUserResponse, error) {
+// 	relation := &model.Relation{
+// 		FollowerUserID: req.GetFollwerUserId(),
+// 		FollowedUserID: req.GetFollwedUserId(),
+// 	}
 
-	if _, err := s.Usecase.Follow(relation); err != nil {
-		return nil, err
-	}
+// 	if _, err := s.Usecase.Follow(relation); err != nil {
+// 		return nil, err
+// 	}
 
-	return &userservice.FollowUserResponse{Status: &userservice.ResponseStatus{Code: StatusFollowSuccess}}, nil
-}
+// 	return &userservice.FollowUserResponse{Status: &userservice.ResponseStatus{Code: StatusFollowSuccess}}, nil
+// }
 
-func (s server) UnFollowUser(ctx context.Context, req *userservice.UnFollowUserRequet) (*userservice.UnFollowUserResponse, error) {
-	relation := &model.Relation{
-		FollowerUserID: req.GetFollwerUserId(),
-		FollowedUserID: req.GetFollwedUserId(),
-	}
+// func (s server) UnFollowUser(ctx context.Context, req *userservice.UnFollowUserRequet) (*userservice.UnFollowUserResponse, error) {
+// 	relation := &model.Relation{
+// 		FollowerUserID: req.GetFollwerUserId(),
+// 		FollowedUserID: req.GetFollwedUserId(),
+// 	}
 
-	if _, err := s.Usecase.UnFollow(relation); err != nil {
-		return nil, err
-	}
+// 	if _, err := s.Usecase.UnFollow(relation); err != nil {
+// 		return nil, err
+// 	}
 
-	return &userservice.UnFollowUserResponse{Status: &userservice.ResponseStatus{Code: StatusUnFollowSuccess}}, nil
-}
+// 	return &userservice.UnFollowUserResponse{Status: &userservice.ResponseStatus{Code: StatusUnFollowSuccess}}, nil
+// }
 
 // makeCreateUserResponse CreateUserメソッドのresponseを生成し返す
 func (s server) makeCreateUserResponse(statusCode string) *userservice.CreateUserResponse {
