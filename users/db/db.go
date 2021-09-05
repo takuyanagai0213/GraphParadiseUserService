@@ -2,7 +2,6 @@ package db
 
 import (
 	"fmt"
-	"os"
 
 	// gormのmysql接続用
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -26,10 +25,10 @@ var (
 func initDB() {
 	var err error
 	DBMS := "mysql"
-	DBNAME := os.Getenv("DB_NAME")
-	PASSWORD := os.Getenv("DB_PASSWORD")
-	USER := os.Getenv("DB_USER")
-	PROTOCOL := fmt.Sprintf("tcp(%s)", os.Getenv("DB_ADRESS"))
+	DBNAME := "sample"     // os.Getenv("DB_NAME")
+	PASSWORD := "password" // os.Getenv("DB_PASSWORD")
+	USER := "root"         // os.Getenv("DB_USER")
+	PROTOCOL := fmt.Sprintf("tcp(%s)", "mysql:3306")
 	OPTION := "?charset=utf8mb4&parseTime=True&loc=Local"
 	CONNECTION := fmt.Sprintf("%s:%s@%s/%s%s", USER, PASSWORD, PROTOCOL, DBNAME, OPTION)
 
@@ -81,6 +80,7 @@ func EndCommit() {
 }
 
 func autoMigration() {
+	// DB = GetDB()
 	fmt.Println("migration")
 	DB.AutoMigrate(&model.User{})
 	// DB.AutoMigrate(&model.Relation{})

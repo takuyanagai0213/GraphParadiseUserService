@@ -33,7 +33,6 @@ const (
 
 func (s server) CreateUser(ctx context.Context, req *userservice.CreateUserRequest) (*userservice.CreateUserResponse, error) {
 	user := makeModel(req.GetUser())
-
 	// 既に同一のemailによる登録がないかチェック
 	if s.userExistsByEmail(zero, user.Email) == true {
 		return s.makeCreateUserResponse(StatusEmailAlreadyUsed), nil
